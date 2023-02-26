@@ -11,21 +11,13 @@ import java.sql.Date;
  * @author DELL
  */
 public class Student extends User {
+
     private String studentCode;
-    private String email;
-    private String surname;
-    private String middlename;
-    private String givenname;
-    private int gender;
-    private Date dob;
     private Date dateOfIssue;
     private String idCard;
     private String placeOfIssue;
     private String placeOfBirth;
-    private String address;
     private String image;
-    private String phoneNumber;
-    private String nationality;
     private String major;
     private int attendanceExemption;
     private String curriculum;
@@ -46,54 +38,6 @@ public class Student extends User {
         this.studentCode = studentCode;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getMiddlename() {
-        return middlename;
-    }
-
-    public void setMiddlename(String middlename) {
-        this.middlename = middlename;
-    }
-
-    public String getGivenname() {
-        return givenname;
-    }
-
-    public void setGivenname(String givenname) {
-        this.givenname = givenname;
-    }
-
-    public int getGender() {
-        return gender;
-    }
-
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
     public Date getDateOfIssue() {
         return dateOfIssue;
     }
@@ -102,7 +46,7 @@ public class Student extends User {
         this.dateOfIssue = dateOfIssue;
     }
 
-        public String getIdCard() {
+    public String getIdCard() {
         return idCard;
     }
 
@@ -126,36 +70,12 @@ public class Student extends User {
         this.placeOfBirth = placeOfBirth;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
     }
 
     public String getMajor() {
@@ -245,5 +165,5 @@ public class Student extends User {
     public void setMotherPhone(String motherPhone) {
         this.motherPhone = motherPhone;
     }
-    
+
 }
