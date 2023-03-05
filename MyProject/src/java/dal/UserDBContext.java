@@ -23,7 +23,7 @@ public class UserDBContext extends DBContext<User>{
 
         PreparedStatement stm = null;
         try {
-            String sql = "INSERT INTO [user](username, [password], [role], [address],phoneNumber,email,gender, surname,middlename,givenname,nationality) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO [user](username, [password], [role], [address],phoneNumber,email,gender, surname,middlename,givenname,nationality, campus) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
             stm = connection.prepareStatement(sql);
             stm.setString(1, model.getUsername());
             stm.setString(2, model.getPassword());
@@ -35,8 +35,8 @@ public class UserDBContext extends DBContext<User>{
             stm.setString(8, model.getSurname());
             stm.setString(9, model.getMiddlename());
             stm.setString(10, model.getGivenname());
-        
             stm.setString(11, model.getNationality());
+            stm.setString(12, model.getCampus());
             
             stm.executeUpdate();
         } catch (SQLException ex) {
@@ -61,15 +61,16 @@ public class UserDBContext extends DBContext<User>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public User get(String username, String password) {
+    public User get(String username, String password, String campus) {
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String sql = "SELECT [username],[password], [role] FROM [User] WHERE [username] = ? AND [password] = ?";
+        String sql = "SELECT [username],[password], [role], campus FROM [User] WHERE [username] = ? AND [password] = ? AND campus=?";
         try {
             stm = connection.prepareStatement(sql);
            
             stm.setString(1, username);
             stm.setString(2, password);
+            stm.setString(3, campus);
              rs = stm.executeQuery();
             if(rs.next())
             {
@@ -77,6 +78,7 @@ public class UserDBContext extends DBContext<User>{
                 s.setUsername(rs.getString("username"));
                 s.setPassword(rs.getString("password"));
                 s.setRole(rs.getInt("role"));
+                s.setCampus(rs.getString("campus"));
                 return s;
             }
         } catch (SQLException ex) {

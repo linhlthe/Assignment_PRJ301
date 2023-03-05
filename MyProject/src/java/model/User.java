@@ -25,6 +25,15 @@ public class User {
     private boolean gender;
     private Date dob;
     private String nationality;
+    private String campus;
+
+    public String getCampus() {
+        return campus;
+    }
+
+    public void setCampus(String campus) {
+        this.campus = campus;
+    }
 
     public String getAddress() {
         return address;

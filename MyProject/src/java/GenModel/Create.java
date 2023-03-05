@@ -84,15 +84,15 @@ public class Create extends HttpServlet {
       
         int num = Integer.parseInt(request.getParameter("num"));
         UserDBContext db = new UserDBContext();
-        for (int i = 0; i < num; i++) {
+        
             User s = new User();
             Rand r = new Rand();
-            //String studentCode = (r.genStudentCode());
-            s.setSurname("Ngô");
-            s.setMiddlename("Tùng");
-            s.setGivenname("Sơn");
-            //String username = VNCharacterUtils.removeAccent(s.getGivenname().toLowerCase() + s.getSurname().toLowerCase().charAt(0) + s.getMiddlename().toLowerCase().charAt(0) + r.getRandomIntInRange(0, 20));
-            String username = "sonnt5";
+            String studentCode = ("HE171271");
+            s.setSurname("Lê");
+            s.setMiddlename("Thùy");
+            s.setGivenname("Linh");
+            //String username = VNCharacterUtils.removeAccent(s.getGivenname().toLowerCase() + s.getSurname().toLowerCase().charAt(0) + s.getMiddlename().toLowerCase().charAt(0) +r.getRandomIntInRange(1, 20));
+            String username = "linhlthe171271";
             String email = username + "@fpt.edu.vn";
             String password = username;
             MessageDigest md = null;
@@ -111,10 +111,10 @@ public class Create extends HttpServlet {
             s.setPhoneNumber(r.phone());
             s.setNationality(r.nationality());
             s.setGender(r.getRandomIntInRange(0, 1) != 0);
-            s.setRole(1);
+            s.setRole(0);
             db.insert(s);
-        }
-        response.getWriter().print("jdfn");
+        
+        response.getWriter().print("added");
     }
 
     /**

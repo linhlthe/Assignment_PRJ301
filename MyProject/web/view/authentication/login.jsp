@@ -12,23 +12,22 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
 -->
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
-        <link href="../../css/login.css" rel="stylesheet" type="text/css"/>
-
+        <link href="././css/login.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <header>
-            <img src="../../img/logo.png" alt=""style="width: 170 px; height: 50px"/>
+
+            <img src="././img/logo.png" width="170px" height="50px"/>
         </header>
 
         <section>
 
             <div class="img-bg">
-                <img src="../../img/backgroung.jpg" alt=""/>
+                <img src="././img/backgroung.jpg"/>
 
             </div>
 
@@ -43,9 +42,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <span>Password</span>
                             <input type="password" name="password">
                         </div>
-
+                        <div class="enter">
+                            <select name="campus"> 
+                                <option selected="selected" value="">Select Campus</option>
+                                <option>FU Hoa Lac</option>
+                                <option>FU Quy Nhon</option>
+                                <option>FU Da Nang</option>
+                                <option>FU Ho Chi Minh</option>
+                            </select>
+                        </div>
                         <div class="nho-dang-nhap">
-                            <label><input type="checkbox" name="nhơ"> Nhớ Đăng Nhập</label>
+                            <label><input type="checkbox" name="nho"> Nhớ Mật Khẩu</label>
                         </div>
                         <div class="dang-nhap-sai" style="color:red">
 
@@ -57,6 +64,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <input type="submit" value="Login">
                         </div>
 
+                        <div class="quen-mat-khau">
+                            <a href=""><!-- comment -->Quên Mật Khẩu?</a>
+                        </div>
+
                     </form>
 
                 </div>
@@ -65,8 +76,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         </section>
         <footer>
             <div class="end">
-                Powered by <a href="https://fpt.edu.vn/"> FPT Univerity <a> | <a href="https://cmshn.fpt.edu.vn/"> CMS <a> | <a href="https://cmshn.fpt.edu.vn/"> library <a> | <a href="https://cmshn.fpt.edu.vn/"> book24x7 <a> 
-                                                </div>
-                                                </footer>
-                                                </body>
-                                                </html>
+                Powered by <a href="https://fpt.edu.vn/"> FPT Univerity </a> | <a href="https://cmshn.fpt.edu.vn/"> CMS </a> | <a href="https://cmshn.fpt.edu.vn/"> library </a> | <a href="https://cmshn.fpt.edu.vn/"> book24x7 </a> 
+            </div>
+        </footer>
+    </body>
+</html>
+

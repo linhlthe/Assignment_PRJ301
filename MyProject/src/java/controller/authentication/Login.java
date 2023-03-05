@@ -53,6 +53,8 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String campus = request.getParameter("campus");
+      
         UserDBContext db = new UserDBContext();
         MessageDigest md = null;
         try {
@@ -63,7 +65,7 @@ public class Login extends HttpServlet {
         md.update(password.getBytes());
         byte[] digest = md.digest();
         String myHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
-        User user = db.get(username, myHash);
+        User user = db.get(username, myHash, campus);
         if (user != null) {
             request.getSession().setAttribute("user", user);
             if (user.getRole() == 0) {

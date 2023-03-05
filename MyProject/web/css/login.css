@@ -6,10 +6,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
     Created on : Feb 15, 2023, 9:02:48 PM
     Author     : DELL
 */
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
-*/
 /* 
     Created on : Feb 15, 2023, 9:30:03 AM
     Author     : DELL
@@ -104,6 +100,7 @@ section .noi-dung .form .input-form input{
     background: transparent;
     border-radius: 30px;
 }
+
 section .noi-dung .form .input-form input[type="submit"]{
     background: #187bcd;
     color: #fff;
@@ -121,10 +118,19 @@ section .noi-dung .form .input-form input[type="submit"]{
 section .noi-dung .form .input-form input[type="submit"]:hover{
     background: #73d7ff;
 }
-section .noi-dung .form .nho-dang-nhap{
+section.noi-dung.form.enter select{
+    right: 0;
+}
+section .noi-dung .form .enter.nho-dang-nhap{
     margin-bottom: 10px;
     color: #607d8b;
     font-size: 14px;
+    top:10px;
+}
+section .noi-dung .form .quen-mat-khau{
+
+    font-size: 14px;
+
 }
 section .noi-dung .form .input-form p{
     color: #607d8b;
@@ -145,9 +151,9 @@ footer{
     display: inline-block;
 }
 footer .end{
-  text-align: center;
-  font-size: 16px;
-padding-top: 15px;  
+    text-align: center;
+    font-size: 16px;
+    padding-top: 15px;
 }
 
 @media (max-width: 768px){
