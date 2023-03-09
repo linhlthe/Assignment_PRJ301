@@ -5,10 +5,6 @@
         <servlet-class>GenModel.Create</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>List</servlet-name>
-        <servlet-class>GenModel.List</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>controller.authentication.Login</servlet-class>
     </servlet>
@@ -16,13 +12,13 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>controller.authentication.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>List</servlet-name>
+        <servlet-class>GenModel.List</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Create</servlet-name>
         <url-pattern>/create</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>List</servlet-name>
-        <url-pattern>/list</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>

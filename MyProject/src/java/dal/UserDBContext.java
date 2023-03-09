@@ -18,7 +18,6 @@ import model.User;
  */
 public class UserDBContext extends DBContext<User>{
 
-    @Override
     public void insert(User model) {
 
         PreparedStatement stm = null;
@@ -51,15 +50,6 @@ public class UserDBContext extends DBContext<User>{
         }
     }
 
-    @Override
-    public void update(User model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void delete(User model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     public User get(String username, String password, String campus) {
         PreparedStatement stm = null;
@@ -95,15 +85,7 @@ public class UserDBContext extends DBContext<User>{
         }
         return null;
         
-    }
-    @Override
-    public ArrayList<User> all() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public User get(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   
     
 }
+    }
