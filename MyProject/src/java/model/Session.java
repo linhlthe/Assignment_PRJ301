@@ -14,7 +14,7 @@ public class Session {
     private int sessionID;
     private TimeSlot slot;
     private Instructor instructor;
-    private String room;
+    private Room room;
     private int slotNum;
     private boolean taken;
     private Date date;
@@ -44,11 +44,11 @@ public class Session {
         this.instructor = instructor;
     }
 
-    public String getRoom() {
+    public Room getRoom() {
         return room;
     }
 
-    public void setRoom(String room) {
+    public void setRoom(Room room) {
         this.room = room;
     }
 

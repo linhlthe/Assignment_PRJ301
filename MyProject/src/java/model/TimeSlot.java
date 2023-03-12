@@ -5,6 +5,7 @@
 package model;
 
 import java.sql.Time;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,6 +18,16 @@ public class TimeSlot {
     private int time;
     private Time startTime;
     private Time endTime;
+    private ArrayList<Session> sessions = new ArrayList<>();
+
+    public ArrayList<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(ArrayList<Session> sessions) {
+        this.sessions = sessions;
+    }
+    
 
     public int getSlotID() {
         return slotID;

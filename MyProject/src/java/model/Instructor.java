@@ -5,24 +5,33 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
  * @author DELL
  */
-public class Instructor extends User{
+public class Instructor extends User {
 
-    private String department;
-    
-   
+    private Department department;
+    private ArrayList<Session> sessions = new ArrayList<>();
 
-    public String getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 
+    public ArrayList<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(ArrayList<Session> sessions) {
+        this.sessions = sessions;
+    }
     
+    
+
 }

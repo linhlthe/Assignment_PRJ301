@@ -16,9 +16,9 @@ import model.User;
  *
  * @author DELL
  */
-public class UserDBContext extends DBContext<User>{
+public class UserDBContext extends DBContext<User> {
 
-    public void insert(User model) {
+    /*public void insert(User model) {
 
         PreparedStatement stm = null;
         try {
@@ -48,22 +48,19 @@ public class UserDBContext extends DBContext<User>{
                 Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-
-
+    }*/
     public User get(String username, String password, String campus) {
         PreparedStatement stm = null;
         ResultSet rs = null;
         String sql = "SELECT [username],[password], [role], campus FROM [User] WHERE [username] = ? AND [password] = ? AND campus=?";
         try {
             stm = connection.prepareStatement(sql);
-           
+
             stm.setString(1, username);
             stm.setString(2, password);
             stm.setString(3, campus);
-             rs = stm.executeQuery();
-            if(rs.next())
-            {
+            rs = stm.executeQuery();
+            if (rs.next()) {
                 User s = new User();
                 s.setUsername(rs.getString("username"));
                 s.setPassword(rs.getString("password"));
@@ -73,8 +70,7 @@ public class UserDBContext extends DBContext<User>{
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally {
+        } finally {
             try {
                 rs.close();
                 stm.close();
@@ -84,8 +80,6 @@ public class UserDBContext extends DBContext<User>{
             }
         }
         return null;
-        
-   
-    
-}
+
     }
+}

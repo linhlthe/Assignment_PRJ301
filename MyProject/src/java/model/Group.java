@@ -20,7 +20,25 @@ public class Group {
     private String eduNextURL;
     private String meetURL;
     private int online;
+    private Semester semester;
     private ArrayList<Student> students = new ArrayList<>();
+    private ArrayList<Session> sessions = new ArrayList<>();
+
+    public ArrayList<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(ArrayList<Session> sessions) {
+        this.sessions = sessions;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
+    }
 
     public int getGroupID() {
         return groupID;

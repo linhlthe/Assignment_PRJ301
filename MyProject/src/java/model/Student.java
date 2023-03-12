@@ -5,6 +5,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,6 +30,16 @@ public class Student extends User {
     private String motherName;
     private String motherJob;
     private String motherPhone;
+    ArrayList<Group> groups = new ArrayList<>();
+
+    public ArrayList<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(ArrayList<Group> groups) {
+        this.groups = groups;
+    }
+    
 
     public String getStudentCode() {
         return studentCode;

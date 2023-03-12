@@ -4,7 +4,7 @@
  */
 package controller.authentication;
 
-import GenModel.Create;
+
 import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -68,11 +68,7 @@ public class Login extends HttpServlet {
         User user = db.get(username, myHash, campus);
         if (user != null) {
             request.getSession().setAttribute("user", user);
-            if (user.getRole() == 0) {
-                request.getRequestDispatcher("view/student/home.jsp").forward(request, response);
-            } else {
-                request.getRequestDispatcher("view/instructor/home.jsp").forward(request, response);
-            }
+            response.sendRedirect("home");
         } else {
             String inform = "Tên đăng nhập hoặc mật khẩu không tồn tại";
             request.setAttribute("error", inform);

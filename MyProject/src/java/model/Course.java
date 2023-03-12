@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author DELL
@@ -12,7 +14,6 @@ public class Course {
     private int courseID;
     private String courseCode;
     private String courseName;
-    private String department;
     private int noCredit;
     private String degreeLevel;
     private String timeAllocation;
@@ -25,6 +26,8 @@ public class Course {
     private String note;
     private int minAvgMarkToPass;
     private int numOfSlot;
+    private Department department;
+    private ArrayList<Course> preRequisite;
 
     public int getCourseID() {
         return courseID;
@@ -50,11 +53,11 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public String getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 
@@ -153,6 +156,15 @@ public class Course {
     public void setNumOfSlot(int numOfSlot) {
         this.numOfSlot = numOfSlot;
     }
+
+    public ArrayList<Course> getPreRequisite() {
+        return preRequisite;
+    }
+
+    public void setPreRequisite(ArrayList<Course> preRequisite) {
+        this.preRequisite = preRequisite;
+    }
+    
     
 
 }

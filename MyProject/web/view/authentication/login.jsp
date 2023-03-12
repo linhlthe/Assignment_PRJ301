@@ -45,10 +45,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <div class="enter">
                             <select name="campus"> 
                                 <option selected="selected" value="">Select Campus</option>
-                                <option>FU Hoa Lac</option>
-                                <option>FU Quy Nhon</option>
-                                <option>FU Da Nang</option>
-                                <option>FU Ho Chi Minh</option>
+                                <option value="HL">FU Hoa Lac</option>
+                                <option value="QN">FU Quy Nhon</option>
+                                <option value="DN">FU Da Nang</option>
+                                <option value="HCM">FU Ho Chi Minh</option>
                             </select>
                         </div>
                         <div class="nho-dang-nhap">

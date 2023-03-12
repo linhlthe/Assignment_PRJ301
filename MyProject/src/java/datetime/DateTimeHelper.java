@@ -49,9 +49,7 @@ public class DateTimeHelper {
     }
 
     public static LocalDate toLocalDate(Date dateToConvert) {
-        return dateToConvert.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+        return dateToConvert.toLocalDate();
     }
 
 }
