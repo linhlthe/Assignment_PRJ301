@@ -5,17 +5,28 @@
 package model;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
  *
  * @author DELL
  */
 public class CheckAttendance {
+    private int aid;
     private Student student;
     private Session session;
     private boolean status;
     private String comment;
-    private Time recorededTime;
+    private Timestamp recordedTime;
+
+    public int getAid() {
+        return aid;
+    }
+
+    public void setAid(int aid) {
+        this.aid = aid;
+    }
+    
 
     public Student getStudent() {
         return student;
@@ -49,13 +60,14 @@ public class CheckAttendance {
         this.comment = comment;
     }
 
-    public Time getRecorededTime() {
-        return recorededTime;
+    public Timestamp getRecordedTime() {
+        return recordedTime;
     }
 
-    public void setRecorededTime(Time recorededTime) {
-        this.recorededTime = recorededTime;
+    public void setRecordedTime(Timestamp recorededTime) {
+        this.recordedTime = recorededTime;
     }
+
     
     
 }

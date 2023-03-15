@@ -9,7 +9,7 @@ package model;
  * @author DELL
  */
 public class Room {
-    private int roomiD;
+    private int roomID;
     private String roomName;
     private String area;
     private int capacity;
@@ -17,12 +17,12 @@ public class Room {
     private String decription;
     private boolean disable;
 
-    public int getRoomiD() {
-        return roomiD;
+    public int getRoomID() {
+        return roomID;
     }
 
-    public void setRoomiD(int roomiD) {
-        this.roomiD = roomiD;
+    public void setRoomID(int roomID) {
+        this.roomID = roomID;
     }
 
     public String getRoomName() {

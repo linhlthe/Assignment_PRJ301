@@ -30,8 +30,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
         <section>
 
-            <a href=""/>Weekly timetable <br><!-- comment -->
-            <a href=""/>Check attendance<br>
+            <a href="student/WeeklySchedule"/>Weekly timetable <br><!-- comment -->
+            <a href="student/timetable"/>View Schedule <br/>
+            <a href="student/reportAttendance"/>Attendance Report <br><!-- comment -->
+            
 
         </section>
         <footer>

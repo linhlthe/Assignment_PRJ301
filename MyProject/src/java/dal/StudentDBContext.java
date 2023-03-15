@@ -16,6 +16,7 @@ import model.Course;
 import model.Group;
 import model.Instructor;
 import model.Room;
+import model.Semester;
 import model.Session;
 import model.Student;
 import model.TimeSlot;
@@ -132,8 +133,8 @@ public class StudentDBContext extends UserDBContext {
                     + "                    INNER JOIN [room] r ON r.roomID = ses.roomID\n"
                     + "                    INNER JOIN [instructor] i ON i.instructorID = ses.instructorID\n"
                     + "		           INNER JOIN [user] u ON i.instructorID = u.id\n"
-                    + "                    WHERE s.studentID =? AND ses.[date] between ? AND ?";
-  
+                    + "                    WHERE s.studentID =? AND ses.[date] between ? AND ? ORDER BY s.studentID,g.groupID";
+
             stm = connection.prepareStatement(sql);
             stm.setInt(1, sid);
             stm.setDate(2, from);
@@ -141,12 +142,14 @@ public class StudentDBContext extends UserDBContext {
             rs = stm.executeQuery();
             Group currentGroup = new Group();
             currentGroup.setGroupID(-1);
+
             while (rs.next()) {
                 if (student == null) {
                     student = new Student();
                     student.setId(rs.getInt("studentID"));
-                    
+
                 }
+
                 int gid = rs.getInt("groupID");
                 if (gid != currentGroup.getGroupID()) {
                     currentGroup = new Group();
@@ -170,14 +173,13 @@ public class StudentDBContext extends UserDBContext {
                 ses.setInstructor(i);
 
                 Room r = new Room();
-                r.setRoomiD(rs.getInt("roomID"));
+                r.setRoomID(rs.getInt("roomID"));
                 r.setRoomName(rs.getString("roomName"));
                 ses.setRoom(r);
 
-                
                 TimeSlot t = new TimeSlot();
                 t.setSlotID(rs.getInt("slotID"));
-                t.setSlotNum(rs.getInt(rs.getInt("slotNum")));
+                t.setSlotNum(rs.getInt("slotNum"));
                 t.setStartTime(rs.getTime("startTime"));
                 t.setEndTime(rs.getTime("endTime"));
                 ses.setSlot(t);
@@ -196,6 +198,51 @@ public class StudentDBContext extends UserDBContext {
                 Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
         return student;
     }
+
+    public ArrayList<Group> getAllGroupInTerm(int studentID, Semester ses) {
+        ArrayList<Group> groups = new ArrayList<>();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT c.courseID, c.code, c.courseName,g.groupID,g.groupName\n"
+                + "FROM student s LEFT JOIN studentJoin sj ON sj.studentID = s.studentID\n"
+                + "LEFT JOIN [Group] g ON g.groupID = sj.groupID\n"
+                + "LEFT JOIN Course c ON c.courseID=g.courseID\n"
+                + "LEFT JOIN [semester] semes ON semes.termID=g.termID\n"
+                + "WHERE s.studentID=? AND semes.termID=?";
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, studentID);
+            stm.setInt(2, ses.getTermID());
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Group g = new Group();
+                Course c= new Course();
+                c.setCourseID(rs.getInt("courseID"));
+                c.setCourseCode(rs.getString("code"));
+                c.setCourseName(rs.getString("courseName"));
+                g.setGroupID(rs.getInt("groupID"));
+                g.setGroupName(rs.getString("groupName"));
+                g.setCourse(c);
+                groups.add(g);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                stm.close();
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return groups;
+
+    }
+
 }

@@ -49,7 +49,7 @@ public class SemesterDBContext extends DBContext<Semester> {
         return term;
     }
 
-    public ArrayList<Semester> allOfStudent(Student s) {
+    public ArrayList<Semester> allOfStudent(int studentID) {
         ArrayList<Semester> term = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -61,7 +61,7 @@ public class SemesterDBContext extends DBContext<Semester> {
                 + "group by s.termID, sj.studentID,s.termName";
         try {
             stm = connection.prepareStatement(sql);
-            stm.setInt(1, s.getId());
+            stm.setInt(1, studentID);
             rs = stm.executeQuery();
             while (rs.next()) {
                 Semester ses = new Semester();

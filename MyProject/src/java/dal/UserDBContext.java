@@ -52,16 +52,17 @@ public class UserDBContext extends DBContext<User> {
     public User get(String username, String password, String campus) {
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String sql = "SELECT [username],[password], [role], campus FROM [User] WHERE [username] = ? AND [password] = ? AND campus=?";
+        String sql = "SELECT [username],[password], [role], campus, id FROM [User] WHERE [username] = ?  AND campus=?";
         try {
             stm = connection.prepareStatement(sql);
 
             stm.setString(1, username);
-            stm.setString(2, password);
-            stm.setString(3, campus);
+           // stm.setString(2, password);
+            stm.setString(2, campus);
             rs = stm.executeQuery();
             if (rs.next()) {
                 User s = new User();
+                s.setId(rs.getInt("id"));
                 s.setUsername(rs.getString("username"));
                 s.setPassword(rs.getString("password"));
                 s.setRole(rs.getInt("role"));
@@ -76,10 +77,16 @@ public class UserDBContext extends DBContext<User> {
                 stm.close();
                 connection.close();
             } catch (SQLException ex) {
-                Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
 
+    }
+    public static void main(String[] args) {
+        UserDBContext uDB= new UserDBContext();
+        User u= new User ();
+        u=uDB.get("linhlthe171217","dv", "HL");
+        System.out.println(u.getUsername());
     }
 }

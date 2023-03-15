@@ -15,60 +15,37 @@ import model.User;
  */
 public abstract class BaseRequireAuthenticationController extends HttpServlet {
 
-    private boolean isAuthenticatedStudent(HttpServletRequest request) {
+    private boolean isAuthenticated(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
-        int role = user.getRole();
-        if (user != null && role == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    private boolean isAuthenticatedInstructor(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        int role = user.getRole();
-        if (user != null && role == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return user != null;
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (isAuthenticatedStudent(req)) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (isAuthenticated(request)) {
             //do business
-            doPost(req, resp, (User) req.getSession().getAttribute("user"));
+            doPost(request, response, (User) request.getSession().getAttribute("user"));
         } else {
-            resp.getWriter().println("access denied!");
-        }
-        if (isAuthenticatedInstructor(req)) {
-            //do business
-            doPost(req, resp, (User) req.getSession().getAttribute("user"));
-        } else {
-            resp.getWriter().println("access denied!");
+            String inform = "Vui lòng đăng nhập trước!";
+            request.setAttribute("error", inform);
+            response.sendRedirect("../login");
         }
     }
 
     protected abstract void doPost(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (isAuthenticatedStudent(req)) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (isAuthenticated(request)) {
             //do business
-            doGet(req, resp, (User) req.getSession().getAttribute("user"));
+            doGet(request, response, (User) request.getSession().getAttribute("user"));
         } else {
-            resp.getWriter().println("access denied!");
-        }
-        if (isAuthenticatedInstructor(req)) {
-            //do business
-            doGet(req, resp, (User) req.getSession().getAttribute("user"));
-        } else {
-            resp.getWriter().println("access denied!");
+            String inform = "Vui lòng đăng nhập trước!";
+            request.setAttribute("error", inform);
+            response.sendRedirect("../login");
         }
     }
 
     protected abstract void doGet(HttpServletRequest req, HttpServletResponse resp, User user) throws ServletException, IOException;
-  
 
 }

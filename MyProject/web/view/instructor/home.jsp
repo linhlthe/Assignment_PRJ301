@@ -14,9 +14,10 @@
         <link href="../../css/login.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <a href=""/>Weekly timetable <br><!-- comment -->
-        <a href=""/>Check attendance<br>
-        
+        <a href="instructor/weeklySchedule"/>Weekly timetable <br><!-- comment -->
+        <a href="instructor/timetable"/>View Schedule <br/>
+        <a href="instructor/takeAttendance"/>Take Attendance <br/>
+
         <footer>
             <div class="end">
                 Powered by <a href="https://fpt.edu.vn/"> FPT Univerity <a> | <a href="https://cmshn.fpt.edu.vn/"> CMS <a> | <a href="https://cmshn.fpt.edu.vn/"> library <a> | <a href="https://cmshn.fpt.edu.vn/"> book24x7 <a> 

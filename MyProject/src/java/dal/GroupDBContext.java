@@ -29,8 +29,8 @@ public class GroupDBContext extends DBContext<Group> {
         ResultSet rs = null;
 
         String sql = "select g.groupID, g.groupName from [group] g\n"
-                + "inner join course c on g.courseID=c.courseID\n"
-                + "inner join semester s on s.termID = g.termID\n"
+                + "right join course c on g.courseID=c.courseID\n"
+                + "right join semester s on s.termID = g.termID\n"
                 + "where g.termID=? AND g.courseID=?";
         try {
             stm = connection.prepareStatement(sql);

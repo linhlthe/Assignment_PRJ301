@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,7 +80,7 @@ public class InstructorDBContext extends DBContext<Instructor> {
         ResultSet rs = null;
         try {
             String sql = "SELECT i.instructorID,ses.sessionID, ses.[date] ,ses.taken, g.groupID, g.groupName, \n"
-                    + "c.courseID, c.code, r.roomID, r.roomName, t.slotNum,t.startTime, t.endTime	\n"
+                    + "c.courseID, c.code, r.roomID, r.roomName,t.slotID, t.slotNum,t.startTime, t.endTime, c.courseName	\n"
                     + "FROM instructor i INNER JOIN [session]  ses ON i.instructorID = ses.instructorID\n"
                     + "INNER JOIN [group] g ON g.groupID = ses.groupID\n"
                     + "INNER JOIN [course] c ON g.courseID = c.courseID\n"
@@ -100,7 +101,7 @@ public class InstructorDBContext extends DBContext<Instructor> {
                     instructor.setId(rs.getInt("instructorID"));
 
                 }
-            int sesid = rs.getInt("sessionid");
+            int sesid = rs.getInt("sessionID");
             if (sesid != ses.getSessionID()) {
                 ses = new Session();
                 ses.setSessionID(rs.getInt("sessionID"));
@@ -113,19 +114,20 @@ public class InstructorDBContext extends DBContext<Instructor> {
                 Course c = new Course();
                 c.setCourseID(rs.getInt("courseID"));
                 c.setCourseCode(rs.getString("code"));
+                c.setCourseName(rs.getString("courseName"));
                 g.setCourse(c);
                 ses.setGroup(g);
                 Room r = new Room();
-                r.setRoomiD(rs.getInt("rommID"));
+                r.setRoomID(rs.getInt("roomID"));
                 r.setRoomName(rs.getString("roomName"));
                 ses.setRoom(r);
 
-                Calendar cal = Calendar.getInstance();
+        
                 TimeSlot t = new TimeSlot();
                 t.setSlotID(rs.getInt("slotID"));
-                t.setSlotNum(rs.getInt(rs.getInt("slotNum")));
-                t.setStartTime(rs.getTime("start", cal));
-                t.setEndTime(rs.getTime("end", cal));
+                t.setSlotNum(rs.getInt("slotNum"));
+                t.setStartTime(rs.getTime("startTime"));
+                t.setEndTime(rs.getTime("endTime"));
                 ses.setSlot(t);
 
                 
@@ -147,5 +149,6 @@ public class InstructorDBContext extends DBContext<Instructor> {
         }
         return instructor;
     }
+    
 
 }

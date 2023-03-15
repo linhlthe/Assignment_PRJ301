@@ -4,7 +4,6 @@
  */
 package controller.authentication;
 
-
 import dal.UserDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -54,7 +53,7 @@ public class Login extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String campus = request.getParameter("campus");
-      
+
         UserDBContext db = new UserDBContext();
         MessageDigest md = null;
         try {

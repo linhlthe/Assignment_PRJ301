@@ -72,33 +72,25 @@
                         </td>
                         <c:forEach items="${requestScope.dates}" var="d">
                             <td>
-                                <c:forEach items="${requestScope.student.groups}" var="g">
-                                    <c:forEach items="${g.sessions}" var="ses">
+                                <c:forEach items="${requestScope.sessions}" var="ses">
+                                    
+
 
                                         <c:if test="${ses.date eq d and ses.slot.slotNum eq i}">
-                                            ${g.groupName} - ${g.course.courseCode}<br/>
-                                            ${ses.instructor.username} at ${ses.room.roomName} <br/>
+                                            ${ses.group.groupName} - ${ses.group.course.courseCode}<br/>
+                                            at ${ses.room.roomName} <br/>
                                             <fmt:formatDate type = "time" timeStyle = "short" value = "${ses.slot.startTime}" /> - <fmt:formatDate type = "time" timeStyle = "short" value = "${ses.slot.endTime}" /> <br/>
                                             <c:if test="${ses.taken}">
-                                                <c:forEach items="${requestScope.atts}" var="att">
-                                                    <c:if test="${att.session.sessionID eq ses.sessionID}">
-                                                        <c:if test="${att.status}">
-                                                            <font color="green">attended</font>    
-                                                        </c:if>
-                                                        <c:if test="${att.status eq false}">
-                                                            <font color="red">absent</font>    
-                                                        </c:if>
-                                                    </c:if>
-                                                </c:forEach>
+                                                <font color="green">attended</font>   
                                             </c:if>
                                             <c:if test="${ses.taken eq false}">
-                                                <font color="red">Not yet</font>   
+                                                <a href="checkAttendance?id=${ses.sessionID}"/>Take attendance  
                                             </c:if>
 
                                         </c:if>
 
+
                                     </c:forEach>
-                                </c:forEach>
                             </td>
                         </c:forEach>
                     </tr>
@@ -107,6 +99,7 @@
 
             </table>
         </div>
+
 
 
 

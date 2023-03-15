@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author DELL
  */
 public class Student extends User {
-
+    
+    
     private String studentCode;
     private Date dateOfIssue;
     private String idCard;
