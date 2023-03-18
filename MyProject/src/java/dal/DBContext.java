@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author DELL
  * @param <T>
  */
-public abstract class DBContext<T> {
+public class DBContext<T> {
 
     protected Connection connection;
 

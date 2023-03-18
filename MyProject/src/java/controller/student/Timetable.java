@@ -5,6 +5,7 @@
 package controller.student;
 
 import controller.authentication.BaseRequireAuthenticationController;
+import dal.CheckAttendanceDBContext;
 import dal.StudentDBContext;
 import dal.TimeSlotDBContext;
 import datetime.DateTimeHelper;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.util.ArrayList;
+import model.CheckAttendance;
 import model.Student;
 import model.TimeSlot;
 import model.User;
@@ -80,10 +82,21 @@ public class Timetable extends BaseRequireAuthenticationController {
 
         ArrayList<Date> dates = DateTimeHelper.getListDate(from, to);
         request.setAttribute("dates", dates);
+        if (from.compareTo(to) > 0) {
+            response.getWriter().println("Choose again!");
+        }
+
 
         StudentDBContext stuDB = new StudentDBContext();
         Student student = stuDB.getTimeTable(id, from, to);
         request.setAttribute("student", student);
+        String inform = "timetable";
+        request.setAttribute("inform", inform);
+        request.setAttribute("from", from);
+        request.setAttribute("to", to);
+        CheckAttendanceDBContext db = new CheckAttendanceDBContext();
+        ArrayList<CheckAttendance> atts = db.getAttendancesOfStudentByDays(u.getId(), from, to);
+        request.setAttribute("atts", atts);
 
         request.getRequestDispatcher("../view/student/timetable2.jsp").forward(request, response);
     }

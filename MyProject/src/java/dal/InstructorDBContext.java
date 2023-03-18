@@ -31,18 +31,18 @@ public class InstructorDBContext extends DBContext<Instructor> {
         PreparedStatement stm = null;
         ResultSet rs = null;
 
-        String sql = "select u.surname, u.middlename, u.givenname, u.gender, u.campus,\n"
+        String sql = "select i.instructorID, u.surname, u.middlename, u.givenname, u.gender, u.campus,\n"
                 + "u.email, d.departmentName,u.[address],u.dob,u.nationality, u.phoneNumber\n"
-                + "from instructor i inner join [user] u on u.id=i.instructorID\n"
+                + "from [user] u inner join instructor i on u.id=i.instructorID\n"
                 + "inner join department d on d.departmentID=i.departmentID\n"
                 + "where u.id=?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             rs = stm.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 Instructor i = new Instructor();
-                i.setId(rs.getInt("id"));
+                i.setId(rs.getInt("instructorID"));
                 i.setSurname(rs.getString("surname"));
                 i.setMiddlename(rs.getString("middlename"));
                 i.setGivenname(rs.getString("givenname"));
@@ -81,11 +81,11 @@ public class InstructorDBContext extends DBContext<Instructor> {
         try {
             String sql = "SELECT i.instructorID,ses.sessionID, ses.[date] ,ses.taken, g.groupID, g.groupName, \n"
                     + "c.courseID, c.code, r.roomID, r.roomName,t.slotID, t.slotNum,t.startTime, t.endTime, c.courseName	\n"
-                    + "FROM instructor i INNER JOIN [session]  ses ON i.instructorID = ses.instructorID\n"
-                    + "INNER JOIN [group] g ON g.groupID = ses.groupID\n"
-                    + "INNER JOIN [course] c ON g.courseID = c.courseID\n"
-                    + "INNER JOIN [timeSlot] t ON t.slotID = ses.slotID\n"
-                    + "INNER JOIN [room] r ON r.roomID = ses.roomID\n"
+                    + "FROM instructor i LEFT JOIN [session]  ses ON i.instructorID = ses.instructorID\n"
+                    + "LEFT JOIN [group] g ON g.groupID = ses.groupID\n"
+                    + "LEFT JOIN [course] c ON g.courseID = c.courseID\n"
+                    + "LEFT JOIN [timeSlot] t ON t.slotID = ses.slotID\n"
+                    + "LEFT JOIN [room] r ON r.roomID = ses.roomID\n"
                     + "WHERE i.instructorID =? AND ses.[date] between ? AND ?";
 
             stm = connection.prepareStatement(sql);
@@ -99,43 +99,44 @@ public class InstructorDBContext extends DBContext<Instructor> {
                 if (instructor == null) {
                     instructor = new Instructor();
                     instructor.setId(rs.getInt("instructorID"));
+                    instructor.getSessions().add(ses);
 
                 }
-            int sesid = rs.getInt("sessionID");
-            if (sesid != ses.getSessionID()) {
-                ses = new Session();
-                ses.setSessionID(rs.getInt("sessionID"));
-                ses.setDate(rs.getDate("date"));
-                ses.setTaken(rs.getBoolean("taken"));
-                Group g = new Group();
-                g.setGroupID(rs.getInt("groupID"));
+                int sesid = rs.getInt("sessionID");
+                if (sesid != ses.getSessionID()) {
+                    ses = new Session();
+                    ses.setSessionID(rs.getInt("sessionID"));
+                    ses.setDate(rs.getDate("date"));
+                    ses.setTaken(rs.getBoolean("taken"));
+                    Group g = new Group();
+                    g.setGroupID(rs.getInt("groupID"));
 
-                g.setGroupName(rs.getString("groupName"));
-                Course c = new Course();
-                c.setCourseID(rs.getInt("courseID"));
-                c.setCourseCode(rs.getString("code"));
-                c.setCourseName(rs.getString("courseName"));
-                g.setCourse(c);
-                ses.setGroup(g);
-                Room r = new Room();
-                r.setRoomID(rs.getInt("roomID"));
-                r.setRoomName(rs.getString("roomName"));
-                ses.setRoom(r);
+                    g.setGroupName(rs.getString("groupName"));
+                    Course c = new Course();
+                    c.setCourseID(rs.getInt("courseID"));
+                    c.setCourseCode(rs.getString("code"));
+                    c.setCourseName(rs.getString("courseName"));
+                    g.setCourse(c);
+                    ses.setGroup(g);
+                    Room r = new Room();
+                    r.setRoomID(rs.getInt("roomID"));
+                    r.setRoomName(rs.getString("roomName"));
+                    ses.setRoom(r);
 
         
-                TimeSlot t = new TimeSlot();
-                t.setSlotID(rs.getInt("slotID"));
-                t.setSlotNum(rs.getInt("slotNum"));
-                t.setStartTime(rs.getTime("startTime"));
-                t.setEndTime(rs.getTime("endTime"));
-                ses.setSlot(t);
+                    TimeSlot t = new TimeSlot();
+                    t.setSlotID(rs.getInt("slotID"));
+                    t.setSlotNum(rs.getInt("slotNum"));
+                    t.setStartTime(rs.getTime("startTime"));
+                    t.setEndTime(rs.getTime("endTime"));
+                    ses.setSlot(t);
 
                 
+                }
+                instructor.getSessions().add(ses);
+
             }
-            instructor.getSessions().add(ses);
-            
-            }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(InstructorDBContext.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -149,6 +150,7 @@ public class InstructorDBContext extends DBContext<Instructor> {
         }
         return instructor;
     }
+
     
 
 }

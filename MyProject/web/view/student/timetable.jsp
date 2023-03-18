@@ -12,11 +12,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="../../css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <jsp:include page="../template/header.jsp"></jsp:include>
+<div class="row">
 
         <div id="weeklytimetable">
-            <table border="1px">
+            <table border="1px" width="1200px">
                 <tr style="background-color:#00bebc">
 
                     <td rowspan='2'><font color="white">
@@ -76,7 +79,7 @@
                                     <c:forEach items="${g.sessions}" var="ses">
 
                                         <c:if test="${ses.date eq d and ses.slot.slotNum eq i}">
-                                            ${g.groupName} - ${g.course.courseCode}<br/>
+                                            <a href="/group/groupDetail?group=${g.groupID}">${g.groupName}</a> - <a href="/course/courseDetail?course=${ses.group.course.courseID}">${ses.group.course.courseCode}</a><br/>
                                             ${ses.instructor.username} at ${ses.room.roomName} <br/>
                                             <fmt:formatDate type = "time" timeStyle = "short" value = "${ses.slot.startTime}" /> - <fmt:formatDate type = "time" timeStyle = "short" value = "${ses.slot.endTime}" /> <br/>
                                             <c:if test="${ses.taken}">
@@ -107,7 +110,8 @@
 
             </table>
         </div>
-
+       
+</div>
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -137,5 +141,6 @@
                                             xhttp.send();
                                         }
         </script>  
+        
     </body>
 </html>

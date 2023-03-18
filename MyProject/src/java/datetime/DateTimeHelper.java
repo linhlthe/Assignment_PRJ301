@@ -6,7 +6,9 @@ package datetime;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -51,5 +53,12 @@ public class DateTimeHelper {
     public static LocalDate toLocalDate(Date dateToConvert) {
         return dateToConvert.toLocalDate();
     }
+    public static String getCurrentTime(){
+        LocalDateTime myDateObj = LocalDateTime.now();            
+            DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            String recordedTime = myDateObj.format(myFormatObj);
+            return recordedTime;
+    }
+   
 
 }

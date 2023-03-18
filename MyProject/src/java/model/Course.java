@@ -22,7 +22,7 @@ public class Course {
     private String tool;
     private int scoringScale;
     private String decisionNo;
-    private String isApproved;
+    private boolean isApproved;
     private String note;
     private int minAvgMarkToPass;
     private int numOfSlot;
@@ -125,13 +125,15 @@ public class Course {
         this.decisionNo = decisionNo;
     }
 
-    public String getIsApproved() {
+    public boolean isIsApproved() {
         return isApproved;
     }
 
-    public void setIsApproved(String isApproved) {
+    public void setIsApproved(boolean isApproved) {
         this.isApproved = isApproved;
     }
+
+    
 
     public String getNote() {
         return note;

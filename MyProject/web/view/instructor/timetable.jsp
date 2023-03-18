@@ -12,19 +12,22 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="../../css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        
+        <jsp:include page="../template/header.jsp"></jsp:include>
+         <div class="row">
+            <div id="weeklytimetable">
+                <table border="1px" width="1200px">
+                    <tr>
 
-        <div id="weeklytimetable">
-            <table border="1px">
-                <tr style="background-color:#00bebc">
+                        <th rowspan='2'><font color="white">
+                            <form action="timetable" method="POST"> 
+                                <div class="enter">
 
-                    <td rowspan='2'><font color="white">
-                        <form action="timetable" method="POST"> 
-                            <div class="enter">
-
-                                <div id="selectedyear"><!-- comment -->
-                                    YEAR <select name="year" onchange="showWeek(this.value)" > 
+                                    <div id="selectedyear"><!-- comment -->
+                                        YEAR <select name="year" onchange="showWeek(this.value)" > 
 
                                         <c:forEach items="${requestScope.listYear}" var="year">
                                             <option value="${year} "  <c:if test="${requestScope.currentyear eq year}">selected="selected"</c:if>>${year}</option> 
@@ -50,18 +53,18 @@
                                 </div>
                             </div>
                         </form><!-- comment -->
-                    </td>
-                    <td>MON</td>
-                    <td>TUE</td>
-                    <td>WED</td>
-                    <td>THU</td>
-                    <td>FRI</td>
-                    <td>SAT</td>
-                    <td>SUN</td>
+                    </th>
+                    <th>MON</th>
+                    <th>TUE</th>
+                    <th>WED</th>
+                    <th>THU</th>
+                    <th>FRI</th>
+                    <th>SAT</th>
+                    <th>SUN</th>
                 </tr>
                 <tr style="background-color:#00bebc">
                     <c:forEach items="${requestScope.dates}" var="d">
-                        <td><fmt:formatDate pattern="dd/MM" value="${d}" /> </td>
+                        <th><fmt:formatDate pattern="dd/MM" value="${d}" /> </th>
                     </c:forEach>
 
                 </tr>
@@ -73,24 +76,24 @@
                         <c:forEach items="${requestScope.dates}" var="d">
                             <td>
                                 <c:forEach items="${requestScope.sessions}" var="ses">
-                                    
 
 
-                                        <c:if test="${ses.date eq d and ses.slot.slotNum eq i}">
-                                            ${ses.group.groupName} - ${ses.group.course.courseCode}<br/>
-                                            at ${ses.room.roomName} <br/>
-                                            <fmt:formatDate type = "time" timeStyle = "short" value = "${ses.slot.startTime}" /> - <fmt:formatDate type = "time" timeStyle = "short" value = "${ses.slot.endTime}" /> <br/>
-                                            <c:if test="${ses.taken}">
-                                                <font color="green">attended</font>   
-                                            </c:if>
-                                            <c:if test="${ses.taken eq false}">
-                                                <a href="checkAttendance?id=${ses.sessionID}"/>Take attendance  
-                                            </c:if>
 
+                                    <c:if test="${ses.date eq d and ses.slot.slotNum eq i}">
+                                        <a href="/group/groupDetail?group=${ses.group.groupID}">${ses.group.groupName}</a> - <a href="/course/courseDetail?course=${ses.group.course.courseID}">${ses.group.course.courseCode}</a>
+                                        at ${ses.room.roomName} <br/>
+                                        <fmt:formatDate type = "time" timeStyle = "short" value = "${ses.slot.startTime}" /> - <fmt:formatDate type = "time" timeStyle = "short" value = "${ses.slot.endTime}" /> <br/>
+                                        <c:if test="${ses.taken}">
+                                            <font color="green">attended</font>   
+                                        </c:if>
+                                        <c:if test="${ses.taken eq false}">
+                                            <a href="checkAttendance?id=${ses.sessionID}&instructor=${sessionScope.user.id}"/>Take attendance  
                                         </c:if>
 
+                                    </c:if>
 
-                                    </c:forEach>
+
+                                </c:forEach>
                             </td>
                         </c:forEach>
                     </tr>
@@ -99,7 +102,7 @@
 
             </table>
         </div>
-
+        </div>
 
 
 

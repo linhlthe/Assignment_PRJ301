@@ -25,13 +25,15 @@ public class SemesterDBContext extends DBContext<Semester> {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT termID, termName FROM semester";
+            String sql = "SELECT termID, termName, startDate, endDate FROM semester";
             stm = connection.prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {
                 Semester s = new Semester();
                 s.setTermID(rs.getInt("termID"));
                 s.setTermName(rs.getString("termName"));
+                s.setStartDate(rs.getDate("startDate"));
+                s.setEndDate(rs.getDate("endDate"));
                 term.add(s);
             }
 
@@ -82,5 +84,13 @@ public class SemesterDBContext extends DBContext<Semester> {
             }
         }
         return term;
+    }
+    public static void main(String[] args) {
+        SemesterDBContext seDB= new SemesterDBContext();
+        ArrayList<Semester> term =seDB.allOfStudent(17);
+        for(Semester s: term){
+            System.out.println(s.getTermName());
+        }
+        
     }
 }

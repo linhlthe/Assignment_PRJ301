@@ -56,6 +56,30 @@
         <servlet-name>ReportAttendance</servlet-name>
         <servlet-class>controller.student.ReportAttendance</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TimeTable</servlet-name>
+        <servlet-class>controller.instructor.TimeTable</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CourseDetail</servlet-name>
+        <servlet-class>controller.course.CourseDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GroupDetail</servlet-name>
+        <servlet-class>controller.group.GroupDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetTerm</servlet-name>
+        <servlet-class>controller.group.GetTerm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Profile</servlet-name>
+        <servlet-class>controller.student.Profile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportAttendanceInstructor</servlet-name>
+        <servlet-class>controller.instructor.ReportAttendance</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -111,6 +135,30 @@
     <servlet-mapping>
         <servlet-name>ReportAttendance</servlet-name>
         <url-pattern>/student/reportAttendance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TimeTable</servlet-name>
+        <url-pattern>/instructor/timetable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseDetail</servlet-name>
+        <url-pattern>/course/courseDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GroupDetail</servlet-name>
+        <url-pattern>/group/groupDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetTerm</servlet-name>
+        <url-pattern>/group/term</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Profile</servlet-name>
+        <url-pattern>/student/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportAttendanceInstructor</servlet-name>
+        <url-pattern>/instructor/reportAttendance</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

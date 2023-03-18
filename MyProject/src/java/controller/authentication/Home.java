@@ -31,6 +31,7 @@ public class Home extends HttpServlet {
             throws ServletException, IOException {
 
         User u = (User) request.getSession().getAttribute("user");
+        
         if (u != null) {
             if (u.getRole() == 0) {
                 request.getRequestDispatcher("view/student/home.jsp").forward(request, response);

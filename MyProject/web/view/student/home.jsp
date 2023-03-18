@@ -16,30 +16,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
-        <link href="././css/login.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/style.css" rel="stylesheet" type="text/css"/>
 
     </head>
     <body>
-        <header>
-            <img src="././img/logo.png" alt=""width="170px" height="50px"/>
-            <div class="information">
-                <div class="username"> ${sessionScope.user.username}</div><div class="campus"> ${sessionScope.user.campus}</div><div class="logout"> <a href="logout">logout</a></div>
-            </div>
-
-        </header>
-
+        <jsp:include page="../template/header.jsp"></jsp:include>
         <section>
 
             <a href="student/WeeklySchedule"/>Weekly timetable <br><!-- comment -->
             <a href="student/timetable"/>View Schedule <br/>
-            <a href="student/reportAttendance"/>Attendance Report <br><!-- comment -->
+            <a href="student/reportAttendance?term=-1&group=-1"/>Attendance Report <br><!-- comment -->
             
 
         </section>
-        <footer>
-            <div class="end">
-                Powered by <a href="https://fpt.edu.vn/"> FPT Univerity </a> | <a href="https://cmshn.fpt.edu.vn/"> CMS </a> | <a href="https://cmshn.fpt.edu.vn/"> library </a> | <a href="https://cmshn.fpt.edu.vn/"> book24x7 </a> 
-            </div>
-        </footer>
+        <jsp:include page="../template/footer.jsp"></jsp:include>
     </body>
 </html>

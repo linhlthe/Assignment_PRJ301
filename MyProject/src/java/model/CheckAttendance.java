@@ -17,7 +17,8 @@ public class CheckAttendance {
     private Session session;
     private boolean status;
     private String comment;
-    private Timestamp recordedTime;
+    private Instructor taker;
+    private String recordedTime;
 
     public int getAid() {
         return aid;
@@ -60,13 +61,24 @@ public class CheckAttendance {
         this.comment = comment;
     }
 
-    public Timestamp getRecordedTime() {
+    public String getRecordedTime() {
         return recordedTime;
     }
 
-    public void setRecordedTime(Timestamp recorededTime) {
-        this.recordedTime = recorededTime;
+    public void setRecordedTime(String recordedTime) {
+        this.recordedTime = recordedTime;
     }
+
+    
+
+    public Instructor getTaker() {
+        return taker;
+    }
+
+    public void setTaker(Instructor taker) {
+        this.taker = taker;
+    }
+    
 
     
     

@@ -81,7 +81,7 @@ public class GetListWeekOfYear extends HttpServlet {
         
 
         PrintWriter out = response.getWriter();
-        out.println("<table border=\"1px\">\n"
+        out.println("<table border=\"1px\" width=\"1200px\">\n"
                 + "                <tr style=\"background-color:#00bebc\">\n"
                 + "                    <td rowspan='2'><font color=\"white\">\n"
                 + "                        <form action=\"timetable\" method=\"POST\"> \n"
@@ -147,7 +147,7 @@ public class GetListWeekOfYear extends HttpServlet {
                         String rname = r.getRoomName();
 
                         if (ses.getDate().compareTo(d) == 0 && slotNum == i) {
-                            out.println(g.getGroupName() + " - " + code + "<br/>\n"
+                            out.println("<a href=\"/group/groupDetail?group="+g.getGroupID()+"/>"+ g.getGroupName() +"</a> - <a href=\"/course/courseDetail?course="+ses.getGroup().getCourse().getCourseID()+"\">"+code+"</a>" + "<br/>\n"
                                     + iname + " at " + rname + "<br/>\n"
                                     + t.getStartTime() + " - " + t.getEndTime() + " <br/>\n");
                             if (ses.isTaken()) {

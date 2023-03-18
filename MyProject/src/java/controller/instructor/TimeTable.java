@@ -5,52 +5,44 @@
 package controller.instructor;
 
 import controller.authentication.BaseRequireAuthenticationController;
+import dal.CheckAttendanceDBContext;
 import dal.InstructorDBContext;
+import dal.StudentDBContext;
+import dal.TimeSlotDBContext;
 import datetime.DateTimeHelper;
-import datetime.Week;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.sql.Date;
 import java.util.ArrayList;
+import model.CheckAttendance;
 import model.Instructor;
 import model.Session;
+import model.Student;
+import model.TimeSlot;
 import model.User;
 
 /**
  *
  * @author DELL
  */
-public class TakeAttendance extends BaseRequireAuthenticationController {
+public class TimeTable extends BaseRequireAuthenticationController {
 
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
-        User u = (User) request.getSession().getAttribute("user");
-        if(u.getRole()==1){
-        response.setContentType("text/html;charset=UTF-8");
-        User s = (User) request.getSession().getAttribute("user");        
-        LocalDateTime localDate = LocalDateTime.now();
-        request.setAttribute("now", localDate);
-        Week w = new Week();
-        DateTimeHelper d = new DateTimeHelper();
-        w = w.getWeek(d.toSQLDate(java.util.Date.from(localDate.atZone(ZoneId.systemDefault()).toInstant())));
-        InstructorDBContext insDB = new InstructorDBContext();
-        Instructor instructor = insDB.getTimeTable(s.getId(), w.getStart(), w.getEnd());
-        ArrayList<Session> ses = new ArrayList<>();
-        ses = instructor.getSessions();
-
-        request.setAttribute("sessions", ses);
-
-        request.getRequestDispatcher("../view/instructor/checkAttendance.jsp").forward(request, response);
-        } else{
-            response.getWriter().println("access denied");
-        }
+        request.getRequestDispatcher("../view/instructor/timetable2.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -65,7 +57,7 @@ public class TakeAttendance extends BaseRequireAuthenticationController {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
-        processRequest(request, response,user);
+        request.getRequestDispatcher("../view/instructor/timetable2.jsp").forward(request, response);
     }
 
     /**
@@ -79,7 +71,33 @@ public class TakeAttendance extends BaseRequireAuthenticationController {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, User user)
             throws ServletException, IOException {
-        processRequest(request, response, user);
+        User u = (User) request.getSession().getAttribute("user");
+
+        Date from = Date.valueOf(request.getParameter("from"));
+        Date to = Date.valueOf(request.getParameter("to"));
+        int id = Integer.parseInt(request.getParameter("instructorID"));
+
+        TimeSlotDBContext timeDB = new TimeSlotDBContext();
+        ArrayList<TimeSlot> slots = timeDB.all();
+        request.setAttribute("slots", slots);
+        if (from.compareTo(to) > 0) {
+            response.getWriter().println("Choose again!");
+        }
+
+        ArrayList<Date> dates = DateTimeHelper.getListDate(from, to);
+        request.setAttribute("dates", dates);
+
+        InstructorDBContext insDB = new InstructorDBContext();
+        Instructor instructor = insDB.getTimeTable(u.getId(), from, to);
+        
+
+        request.setAttribute("instructor",instructor);
+        String inform = "timetable";
+        request.setAttribute("inform", inform);
+        request.setAttribute("from", from);
+        request.setAttribute("to", to);
+
+        request.getRequestDispatcher("../view/instructor/timetable2.jsp").forward(request, response);
     }
 
     /**
@@ -92,7 +110,4 @@ public class TakeAttendance extends BaseRequireAuthenticationController {
         return "Short description";
     }// </editor-fold>
 
-   
 }
-
-

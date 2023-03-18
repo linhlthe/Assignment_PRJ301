@@ -49,10 +49,10 @@ public class GetTimeTableBySelectedWeek extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
-        Date selectedweek =  java.sql.Date.valueOf(request.getParameter("fromTo")); 
+
+        Date selectedweek = java.sql.Date.valueOf(request.getParameter("fromTo"));
         LocalDate localDate1 = selectedweek.toLocalDate();
-        int selectedyear=localDate1.getYear();
+        int selectedyear = localDate1.getYear();
         User s = (User) request.getSession().getAttribute("user");
         ArrayList<Integer> year = new ArrayList<>();
         LocalDateTime localDate = LocalDateTime.now();
@@ -79,7 +79,7 @@ public class GetTimeTableBySelectedWeek extends HttpServlet {
         }
 
         PrintWriter out = response.getWriter();
-        out.println("<table border=\"1px\">\n"
+        out.println("<table border=\"1px\" width=\"1200px\">\n"
                 + "                <tr style=\"background-color:#00bebc\">\n"
                 + "                    <td rowspan='2'><font color=\"white\">\n"
                 + "                        <form action=\"timetable\" method=\"POST\"> \n"
@@ -99,7 +99,7 @@ public class GetTimeTableBySelectedWeek extends HttpServlet {
                 + "                                    From-To    <select name=\"fromTo\" onchange=\"showtimetable(this.value)\"> \n");
         for (Week k : weeks) {
             out.println(" <option value = \"" + k.getStart() + "\"");
-            if (k.getStart().compareTo(selectedweek)==0) {
+            if (k.getStart().compareTo(selectedweek) == 0) {
                 out.println("selected=\"selected\" ");
             }
             out.println(">" + sdf.format(k.getStart()) + "-" + sdf.format(k.getEnd()) + "</option> \n");
@@ -127,31 +127,28 @@ public class GetTimeTableBySelectedWeek extends HttpServlet {
                     + "<td> Slot " + i + "</td>\n");
             for (Date d : dates) {
                 out.println("<td>\n");
-                
-                    for (Session ses : sessions) {
-                       
-                        if (ses.getDate().compareTo(d) == 0 && ses.getSlot().getSlotNum() == i) {
-                            out.println(ses.getGroup().getGroupName() + " - " + ses.getGroup().getCourse().getCourseCode() + "<br/>\n"
-                                    + " at " + ses.getRoom().getRoomName() + "<br/>\n"
-                                    + ses.getSlot().getStartTime() + " - " + ses.getSlot().getEndTime() + " <br/>\n");
-                            if (ses.isTaken()) {
-                                out.println("<font color=\"green\">attended</font>   \n");
-                            } else {
-                                out.println("<a href=\"checkAttendance?id="+ses.getSessionID()+"\"/>Take attendance");
-                            }
 
+                for (Session ses : sessions) {
+
+                    if (ses.getDate().compareTo(d) == 0 && ses.getSlot().getSlotNum() == i) {
+                        out.println("<a href=\"/group/groupDetail?group=" + ses.getGroup().getGroupID() + "/>" + ses.getGroup().getGroupName() + "</a> - <a href=\"/course/courseDetail?course=" + ses.getGroup().getCourse().getCourseID() + "\">" + ses.getGroup().getCourse().getCourseCode() + "</a>" + "<br/>\n"
+                                + " at " + ses.getRoom().getRoomName() + "<br/>\n"
+                                + ses.getSlot().getStartTime() + " - " + ses.getSlot().getEndTime() + " <br/>\n");
+                        if (ses.isTaken()) {
+                            out.println("<font color=\"green\">attended</font>   \n");
+                        } else {
+                            out.println("<a href=\"checkAttendance?id=" + ses.getSessionID() + "&instructor=" + s.getId() + "\"/>Take attendance");
                         }
-                    }
 
-                
+                    }
+                }
+
                 out.println("</td>");
             }
             out.println("</tr>");
         }
-        
 
         out.println("            </table>");
-
 
     }
 

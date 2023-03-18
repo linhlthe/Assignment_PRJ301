@@ -14,7 +14,6 @@ public class Group {
 
     private int groupID;
     private String groupName;
-    private String term;
     private Course course;
     private Instructor instructor;
     private String eduNextURL;
@@ -54,14 +53,6 @@ public class Group {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
-    }
-
-    public String getTerm() {
-        return term;
-    }
-
-    public void setTerm(String term) {
-        this.term = term;
     }
 
     public Course getCourse() {

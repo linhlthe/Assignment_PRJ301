@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Course;
 import model.Department;
 
 /**
@@ -48,5 +49,7 @@ public class DepartmentDBContext extends DBContext<Department> {
         }
         return depts;
     }
+     
+     
     
 }

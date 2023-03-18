@@ -73,6 +73,7 @@ public class WeeklySchedule extends BaseRequireAuthenticationController {
         ses = instructor.getSessions();
 
         request.setAttribute("sessions", ses);
+        request.setAttribute("address", "Weekly Schedule");
 
         request.getRequestDispatcher("../view/instructor/timetable.jsp").forward(request, response);
     }
@@ -81,5 +82,16 @@ public class WeeklySchedule extends BaseRequireAuthenticationController {
     protected void doPost(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException {
 
     }
+    public static void main(String[] args) {
+        InstructorDBContext insDB = new InstructorDBContext();
+        Instructor instructor = insDB.getTimeTable(16, Date.valueOf("2024-01-01"), Date.valueOf("2024-01-11"));
+        ArrayList<Session> ses = new ArrayList<>();
+        if (instructor.getSessions() != null) {
+            ses = instructor.getSessions();
+        }
+        for (Session s:ses){
+            System.out.println(s.getSessionID());
+    }
 
+}
 }

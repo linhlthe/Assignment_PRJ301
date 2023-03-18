@@ -52,13 +52,13 @@ public class UserDBContext extends DBContext<User> {
     public User get(String username, String password, String campus) {
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String sql = "SELECT [username],[password], [role], campus, id FROM [User] WHERE [username] = ?  AND campus=?";
+        String sql = "SELECT [username],[password], [role], campus, id FROM [User] WHERE [username] = ? AND [password]=? AND campus=?";
         try {
             stm = connection.prepareStatement(sql);
 
             stm.setString(1, username);
-           // stm.setString(2, password);
-            stm.setString(2, campus);
+            stm.setString(2, password);
+            stm.setString(3, campus);
             rs = stm.executeQuery();
             if (rs.next()) {
                 User s = new User();
@@ -83,10 +83,6 @@ public class UserDBContext extends DBContext<User> {
         return null;
 
     }
-    public static void main(String[] args) {
-        UserDBContext uDB= new UserDBContext();
-        User u= new User ();
-        u=uDB.get("linhlthe171217","dv", "HL");
-        System.out.println(u.getUsername());
-    }
+
+    
 }

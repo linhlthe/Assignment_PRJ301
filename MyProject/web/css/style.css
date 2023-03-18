@@ -1,0 +1,105 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : Mar 17, 2023, 9:47:41 PM
+    Author     : DELL
+*/
+
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+
+}
+header{
+    width:100vw;
+    background-color: #ff7a22;
+    height: 8vh;
+    display: inline-block;
+}
+
+header img{
+    margin-top: 5px;
+    margin-left: 100px;
+
+}
+
+.information{
+    margin-left: 5vw;
+    margin-top: 10px;
+    padding-left: 30px;
+
+    width: 90vw;
+    height: 5vh;
+    background-color: #dcdcdc;
+    display: inline-block;
+    align-content: center;
+
+
+}
+
+
+.userinfor button{
+    background-color: #03ac13;
+    font-weight: bold;
+
+
+}
+.homelink span{
+    color: black;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+footer .end{
+    text-align: center;
+    font-size: 16px;
+    padding-top: 15px;
+}
+footer{
+    width:100vw;
+    margin-top: 30px;
+    background-color: #ff7a22;
+    height: 8vh;
+    display: inline-block;
+    margin-bottom:  0;
+}
+.row {
+    margin-top: 20px;
+    width: 90vw;
+    margin-left: 5vw;
+    font-family: Times New Roman;
+    margin-bottom: 30px;
+}
+.row table{
+
+
+    margin-left: auto;
+    margin-right: auto;
+}
+.row table th{
+    color: white;
+    font-family: Times New Roman;
+    font-weight: bold;
+    background-color: #00bebc;
+    text-align: center;
+}
+
+.row table td{
+
+    font-family: Times New Roman;
+
+}
+
+section{
+
+    margin-left: 5vw;
+    height: 78vh;
+    display: flex;
+    width: 90vw;
+
+
+}

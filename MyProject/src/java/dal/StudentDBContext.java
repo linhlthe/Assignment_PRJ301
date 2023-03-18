@@ -28,18 +28,18 @@ import model.User;
  */
 public class StudentDBContext extends UserDBContext {
 
-    public ArrayList<Student> all(Group g) {
+    public ArrayList<Student> all(int gid) {
         ArrayList<Student> students = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
 
         String sql = "select s.studentID,s.studentCode,u.surname, u.middlename, u.givenname , s.imageURL, g.groupID\n"
-                + "                    FROM [user] u INNER JOIN student s ON u.id=s.studentID\n"
-                + "					inner join [studentJoin] sj on sj.studentID=s.studentID\n"
+                + "FROM [user] u INNER JOIN student s ON u.id=s.studentID\n"
+                + "inner join [studentJoin] sj on sj.studentID=s.studentID\n"
                 + "inner join [group] g on g.groupID=sj.groupID where g.groupID =?";
         try {
             stm = connection.prepareStatement(sql);
-            stm.setInt(1, g.getGroupID());
+            stm.setInt(1, gid);
             rs = stm.executeQuery();
             while (rs.next()) {
                 Student s = new Student();
@@ -71,7 +71,7 @@ public class StudentDBContext extends UserDBContext {
         PreparedStatement stm = null;
         ResultSet rs = null;
 
-        String sql = "select s.studentID, s.studentCode,u.username,u.email,u.surname,u.middlename,u.givenname,u.gender,u.dob,u.nationality,u.campus,u.[address],u.phoneNumber, s.idCard,s.placeOfBirth,s.major,s.curriculum,s.peoples,s.imageURL,s.fatherName,s.fatherJob,s.fatherPhoneNumber,s.motherName,s.motherJob,s.motherPhoneNumber from [user] u, student s where u.id=s.studentID AND s.studentCode=?";
+        String sql = "select s.studentID, s.studentCode,u.username,u.email,u.surname,u.middlename,u.givenname,u.gender,u.dob,u.nationality,u.campus,u.[address],u.phoneNumber, s.idCard,s.placeOfBirth,s.major,s.curriculum,s.peoples,s.imageURL,s.fatherName,s.fatherJob,s.fatherPhoneNumber,s.motherName,s.motherJob,s.motherPhoneNumber from [user] u, student s where u.id=s.studentID AND s.studentID=?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
@@ -86,22 +86,22 @@ public class StudentDBContext extends UserDBContext {
                 s.setEmail(rs.getString("email"));
                 s.setGender(rs.getBoolean("gender"));
                 s.setDob(rs.getDate("dob"));
-                s.setNationality("nationality");
+                s.setNationality(rs.getString("nationality"));
                 s.setCampus(rs.getString("campus"));
                 s.setAddress(rs.getString("address"));
                 s.setPhoneNumber(rs.getString("phoneNumber"));
-                s.setIdCard("idCard");
-                s.setCurriculum("curriculum");
-                s.setPlaceOfBirth("placeOfBirth");
-                s.setMajor("major");
-                s.setPeoples("peoples");
-                s.setImage("imageURL");
-                s.setFatherName("fatherName");
-                s.setFatherJob("fatherJob");
-                s.setFatherPhone("fatherPhone");
-                s.setMotherName("motherName");
-                s.setMotherJob("motherJob");
-                s.setMotherPhone("motherPhone");
+                s.setIdCard(rs.getString("idCard"));
+                s.setCurriculum(rs.getString("curriculum"));
+                s.setPlaceOfBirth(rs.getString("placeOfBirth"));
+                s.setMajor(rs.getString("major"));
+                s.setPeoples(rs.getString("peoples"));
+                s.setImage(rs.getString("imageURL"));
+                s.setFatherName(rs.getString("fatherName"));
+                s.setFatherJob(rs.getString("fatherJob"));
+                s.setFatherPhone(rs.getString("fatherPhoneNumber"));
+                s.setMotherName(rs.getString("motherName"));
+                s.setMotherJob(rs.getString("motherJob"));
+                s.setMotherPhone(rs.getString("motherPhoneNumber"));
                 return s;
             }
 
@@ -202,32 +202,26 @@ public class StudentDBContext extends UserDBContext {
         return student;
     }
 
-    public ArrayList<Group> getAllGroupInTerm(int studentID, Semester ses) {
-        ArrayList<Group> groups = new ArrayList<>();
+    public int getNumOfAbsent(int sid, int gid) {
         PreparedStatement stm = null;
         ResultSet rs = null;
+        int n=0;
 
-        String sql = "SELECT c.courseID, c.code, c.courseName,g.groupID,g.groupName\n"
-                + "FROM student s LEFT JOIN studentJoin sj ON sj.studentID = s.studentID\n"
+        String sql = "select count(a.[status])as numOfAbsent, s.studentID, g.groupID\n"
+                + "From student  s LEFT JOIN studentJoin sj ON sj.studentID = s.studentID\n"
                 + "LEFT JOIN [Group] g ON g.groupID = sj.groupID\n"
-                + "LEFT JOIN Course c ON c.courseID=g.courseID\n"
-                + "LEFT JOIN [semester] semes ON semes.termID=g.termID\n"
-                + "WHERE s.studentID=? AND semes.termID=?";
+                + "LEFT JOIN [Session] ses ON ses.groupID = g.groupID\n"
+                + "LEFT JOIN [checkAttendance] a ON ses.sessionID = a.sessionID AND s.studentID = a.studentID\n"
+                + "WHERE s.studentID=? AND a.[status]=0 AND ses.taken=1 AND g.groupID=?\n"
+                + "GROUP BY s.studentID, g.groupID";
         try {
             stm = connection.prepareStatement(sql);
-            stm.setInt(1, studentID);
-            stm.setInt(2, ses.getTermID());
+            stm.setInt(1, sid);
+            stm.setInt(2, gid);
             rs = stm.executeQuery();
             while (rs.next()) {
-                Group g = new Group();
-                Course c= new Course();
-                c.setCourseID(rs.getInt("courseID"));
-                c.setCourseCode(rs.getString("code"));
-                c.setCourseName(rs.getString("courseName"));
-                g.setGroupID(rs.getInt("groupID"));
-                g.setGroupName(rs.getString("groupName"));
-                g.setCourse(c);
-                groups.add(g);
+                n = rs.getInt("numOfAbsent");
+                
             }
 
         } catch (SQLException ex) {
@@ -241,8 +235,18 @@ public class StudentDBContext extends UserDBContext {
                 Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return groups;
+        return n;
 
     }
+    public static void main(String[] args) {
+        StudentDBContext stuDB= new StudentDBContext();
+        Group g= new Group();
+        g.setGroupID(1);
+        ArrayList<Student> students= stuDB.all(1);
+        for(Student s:students){
+            System.out.println(s.getGivenname());
+        }
+    }
+    
 
 }

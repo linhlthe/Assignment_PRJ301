@@ -10,20 +10,24 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="../../css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <form action="checkAttendance" method="POST"> 
-            <table border="1px">
-                <tr style="background-color:#00bebc">
-                    <td>No</td>
-                    <td>Student Code</td>
-                    <td>SurName</td>
-                    <td>MiddleName</td>
-                    <td>GivenName</td>
-                    <td>Status</td>
-                    <td>Image</td>
-                    <td>Comment</td>
-                </tr>
+        
+        <jsp:include page="../template/header.jsp"></jsp:include>
+        <div class="row">
+            <form action="checkAttendance" method="POST"> 
+                <table border="1px">
+                    <tr>
+                        <th>No</th>
+                        <th>Student Code</th>
+                        <th>SurName</th>
+                        <th>MiddleName</th>
+                        <th>GivenName</th>
+                        <th>Status</th>
+                        <th>Image</th>
+                        <th>Comment</th>
+                    </tr>
                 <c:forEach items="${requestScope.atts}" var="a" varStatus="loop">
                     <tr>
 
@@ -45,8 +49,8 @@
                                    </c:if>
                                    name="status${a.student.id}" value="present" /> Present
                         </td>
-                    
-                        <td><img src="../../img_student/4.png" alt=""/></td>
+
+                        <td><img src="${a.student.image}" width="120px" height="160px" alt=""/></td>
                         <td>
 
                             <input type="hidden" name="sid" value="${a.student.id}"/>
@@ -56,10 +60,11 @@
 
                 </c:forEach>
             </table>
-            <img src="../../img_student/5.png" alt=""/>
+
             <input type="hidden" name="sessionid" value="${requestScope.id}"/>
             <input type="submit" value="Save"/>
         </form>
+        </div>
 
     </body>
 </html>
