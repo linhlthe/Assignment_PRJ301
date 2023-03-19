@@ -43,7 +43,7 @@
                         </form>
                     </td>
                     <td width="50px"></td>
-                    <td style="background-color: yellow ; margin-left: 50px" > <b>Note:</b>
+                    <td style="background-color: yellow ; margin-left: 150px" > <b>Note:</b>
                         Password must meet complexity requirements:
                         <ul>
                             <li>Be at least eight characters in length</li>

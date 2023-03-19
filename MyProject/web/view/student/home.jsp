@@ -27,7 +27,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <tr><a href="student/WeeklySchedule"/>Weekly timetable</a><br/></tr>
                         <tr><a href="student/timetable"/>View Schedule</a><br/></tr>
                         <tr><a href="student/reportAttendance?term=-1&group=-1"/>Attendance Report</a><br/></tr>
-                        <tr><a href="student/profile"/>Student Profile</a></tr>
+                        <tr><a href="student/profile"/>Student Profile</a><br/></tr>
+                        <tr><a href="/changePassword"/>Change Password</a></tr>
 
                     </table>
                 </div>

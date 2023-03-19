@@ -23,7 +23,8 @@
                         <tr><a href="instructor/weeklySchedule"/>Weekly timetable</a><br/></tr>
                         <tr><a href="instructor/timetable"/>View Schedule </a><br/></tr>
                         <tr><a href="instructor/takeAttendance"/>Take Attendance </a><br/></tr>
-                        <tr><a href="instructor/profile?instructor=${sessionScope.user.id}"/>Profile</a></tr>
+                        <tr><a href="instructor/profile?instructor=${sessionScope.user.id}"/>Profile</a><br/></tr>
+                    <tr><a href="/changePassword"/>Change Password</a></tr>
                 </table>
             </div>
 
