@@ -16,7 +16,7 @@
         
         <jsp:include page="../template/header.jsp"></jsp:include>
         <div class="row">
-            <table border="1px">
+            <table border="1px" width="1200px" style="text-align: center">
                 <tr>
                     <th>NO</th>
                     <th>STUDENT CODE</th>
@@ -24,13 +24,13 @@
                     <th>MIDDLENAME</th>
                     <th>GIVENAME</th>
                     <th>STATUS</th>
-                    <th>IMAGE</th>
+                    <th width="120px">IMAGE</th>
                     <th>COMMENT</th>
                     <th>TAKER</th>
                     <th>RECORDED TIME</th>
                 </tr>
             <c:forEach items="${requestScope.atts}" var="a" varStatus="loop">
-                <tr>
+                <tr <c:if test="${a.student.attendanceExemption}"> style="background-color: hsl(0, 0%, 75%,0.5)" </c:if>>
 
                     <td>${loop.index +1}</td>
                     <td>${a.student.studentCode}</td>

@@ -79,7 +79,7 @@ public class GetTimeTableBySelectedWeek extends HttpServlet {
         }
 
         PrintWriter out = response.getWriter();
-        out.println("<table border=\"1px\" width=\"1200px\">\n"
+        out.println("<table border=\"1px\" width=\"1200px\" style=\"text-align: center\">\n"
                 + "                <tr style=\"background-color:#00bebc\">\n"
                 + "                    <td rowspan='2'><font color=\"white\">\n"
                 + "                        <form action=\"timetable\" method=\"POST\"> \n"
@@ -131,8 +131,12 @@ public class GetTimeTableBySelectedWeek extends HttpServlet {
                 for (Session ses : sessions) {
 
                     if (ses.getDate().compareTo(d) == 0 && ses.getSlot().getSlotNum() == i) {
-                        out.println("<a href=\"/group/groupDetail?group=" + ses.getGroup().getGroupID() + "/>" + ses.getGroup().getGroupName() + "</a> - <a href=\"/course/courseDetail?course=" + ses.getGroup().getCourse().getCourseID() + "\">" + ses.getGroup().getCourse().getCourseCode() + "</a>" + "<br/>\n"
-                                + " at " + ses.getRoom().getRoomName() + "<br/>\n"
+                        out.println("<a href=\"/group/groupDetail?group="+ses.getGroup().getGroupID()+"\">"+ses.getGroup().getGroupName()+"</a>"+ "- <a href=\"/course/courseDetail?course=" + ses.getGroup().getCourse().getCourseID() + "\">" + ses.getGroup().getCourse().getCourseCode() + "</a>" + "<br/>\n"
+                                + " at " + ses.getRoom().getRoomName() + "<br/>\n");
+                        if(ses.getGroup().getEduNextURL()!= null){
+                            out.println("<button name=\"button\" type=\"button\" onclick=\"window.location.href = '"+ses.getGroup().getEduNextURL()+"'\" style=\"background-color: #00bebc\"><font color=\"white\">EduNext</font></button>");
+                        }
+                               out.println("<button name=\"button\" type=\"button\" onclick=\"window.location.href = '"+ses.getGroup().getMeetURL()+"'\" style=\"background-color: grey\"><font color=\"white\">Meet URL</font></button><br/>"
                                 + ses.getSlot().getStartTime() + " - " + ses.getSlot().getEndTime() + " <br/>\n");
                         if (ses.isTaken()) {
                             out.println("<font color=\"green\">attended</font>   \n");

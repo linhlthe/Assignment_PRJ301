@@ -69,16 +69,20 @@
         <servlet-class>controller.group.GroupDetail</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>GetTerm</servlet-name>
-        <servlet-class>controller.group.GetTerm</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Profile</servlet-name>
         <servlet-class>controller.student.Profile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ReportAttendanceInstructor</servlet-name>
         <servlet-class>controller.instructor.ReportAttendance</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileInstructor</servlet-name>
+        <servlet-class>controller.instructor.Profile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePassword</servlet-name>
+        <servlet-class>controller.authentication.ChangePassword</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -149,16 +153,20 @@
         <url-pattern>/group/groupDetail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>GetTerm</servlet-name>
-        <url-pattern>/group/term</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>Profile</servlet-name>
         <url-pattern>/student/profile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ReportAttendanceInstructor</servlet-name>
         <url-pattern>/instructor/reportAttendance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileInstructor</servlet-name>
+        <url-pattern>/instructor/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePassword</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

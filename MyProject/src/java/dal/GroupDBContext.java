@@ -147,26 +147,27 @@ public class GroupDBContext extends DBContext<Group> {
         PreparedStatement stm = null;
         ResultSet rs = null;
 
-        String sql = "SELECT g.termID, c.departmentID, c.courseID\n"
+        String sql = "SELECT g.groupID,g.termID, c.departmentID, c.courseID\n"
                 + "FROM [group] g inner join course c on g.courseID=c.courseID\n"
                 + "inner join department d on d.departmentID =c.departmentID\n"
                 + "Where g.groupID=?";
         try {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, gid);
-          
+
             rs = stm.executeQuery();
             while (rs.next()) {
-                Semester term= new Semester();
+                Semester term = new Semester();
                 term.setTermID(rs.getInt("termID"));
                 g.setSemester(term);
-                Department d= new Department();
+                Department d = new Department();
                 d.setDepartmentID(rs.getInt("departmentID"));
-                Course c= new Course();
+                Course c = new Course();
                 c.setDepartment(d);
                 c.setCourseID(rs.getInt("courseID"));
+                g.setGroupID(rs.getInt("groupID"));
                 g.setCourse(c);
-             
+
             }
 
         } catch (SQLException ex) {
@@ -182,8 +183,58 @@ public class GroupDBContext extends DBContext<Group> {
         }
         return g;
     }
+
+    public ArrayList<Group> getAllGroupInstructor(int instructorID, int termID) {
+
+        ArrayList<Group> groups = new ArrayList<>();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT c.courseID, c.code, c.courseName,g.groupID,g.groupName, c.numSlot,g.termID\n"
+                    + "                    FROM instructor i LEFT JOIN [Group] g ON g.instructorID = i.instructorID\n"
+                    + "                    LEFT JOIN Course c ON c.courseID=g.courseID\n"
+                    + "                    LEFT JOIN [semester] se ON se.termID=g.termID\n"
+                    + "                    WHERE i.instructorID=? AND se.termID=?";
+
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, instructorID);
+            stm.setInt(2, termID);
+
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Group g = new Group();
+                Semester s = new Semester();
+                s.setTermID(rs.getInt("termID"));
+                g.setSemester(s);
+                Course c = new Course();
+                c.setCourseID(rs.getInt("courseID"));
+                c.setNumOfSlot(rs.getInt("numSlot"));
+                c.setCourseCode(rs.getString("code"));
+                c.setCourseName(rs.getString("courseName"));
+                g.setGroupID(rs.getInt("groupID"));
+                g.setGroupName(rs.getString("groupName"));
+                g.setCourse(c);
+                groups.add(g);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                rs.close();
+                stm.close();
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return groups;
+    }
+
     public static void main(String[] args) {
-        GroupDBContext gDB= new GroupDBContext();
+        GroupDBContext gDB = new GroupDBContext();
         System.out.println(gDB.getByID(1).getCourse().getDepartment().getDepartmentID());
     }
 }

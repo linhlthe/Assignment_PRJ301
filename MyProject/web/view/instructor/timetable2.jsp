@@ -40,15 +40,21 @@
             </div>
             <div>
                 <c:if test="${requestScope.inform ne null}">
-                    <h4>Activities for ${sessionScope.user.username} from ${requestScope.from} to ${requestScope.to}: </h4>
+                    
 
                     <c:if test="${requestScope.instructor.sessions eq null}">
                         <span> You have no activity from ${requestScope.from} to ${requestScope.to} </span>
                     </c:if>
                     <c:if test="${requestScope.instructor.sessions ne null}">
 
-
-                        <table border="1px"> 
+                        <h4>Activities for ${sessionScope.user.username} from ${requestScope.from} to ${requestScope.to}: </h4>
+                        <div><span>Các phòng bắt đầu bằng AL thuộc tòa nhà Alpha. VD: AL...<br/>
+                                Các phòng bắt đầu bằng BE thuộc tòa nhà Beta. VD: BE,..<br/>
+                                Các phòng bắt đầu bằng G thuộc tòa nhà Gamma. VD: G201,...<br/>
+                                Các phòng tập bằng đầu bằng R thuộc khu vực sân tập Vovinam.<br/>
+                                Các phòng bắt đầu bằng DE thuộc tòa nhà Delta. VD: DE,..<br/>
+                                Little UK (LUK) thuộc tầng 5 tòa nhà Delta</span></div>
+                        <table border="1px" style="text-align: center"> 
                             <tr>
                                 <th></th>
                                     <c:forEach items="${requestScope.dates}" var="d">
@@ -70,6 +76,8 @@
                                                 <c:if test="${ses.date eq d and ses.slot.slotNum eq i}">
                                                     <a href="/group/groupDetail?group=${ses.group.groupID}">${ses.group.groupName}</a>  <a href="/course/courseDetail?course=${ses.group.course.courseID}">${ses.group.course.courseCode}</a><br/>
                                                     ${ses.room.roomName} <br/>
+                                                    <c:if test="${ses.group.eduNextURL ne null}"><button name="button" type="button" onclick="window.location.href = '${ses.group.eduNextURL}'" style="background-color: #00bebc"><font color="white">EduNext</font></button></c:if> <button name="button" type="button" onclick="window.location.href = '${ses.group.meetURL}'" style="background-color: grey"><font color="white">Meet URL</font></button><br/>
+
 
                                                     <c:if test="${ses.taken}">
                                                         <font color="green">attended</font>   

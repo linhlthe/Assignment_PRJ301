@@ -21,14 +21,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     </head>
     <body>
         <jsp:include page="../template/header.jsp"></jsp:include>
-        <section>
+            <section>
+                <div style="margin-left: 50px; margin-top: 20px">
+                    <table>
+                        <tr><a href="student/WeeklySchedule"/>Weekly timetable</a><br/></tr>
+                        <tr><a href="student/timetable"/>View Schedule</a><br/></tr>
+                        <tr><a href="student/reportAttendance?term=-1&group=-1"/>Attendance Report</a><br/></tr>
+                        <tr><a href="student/profile"/>Student Profile</a></tr>
 
-            <a href="student/WeeklySchedule"/>Weekly timetable <br><!-- comment -->
-            <a href="student/timetable"/>View Schedule <br/>
-            <a href="student/reportAttendance?term=-1&group=-1"/>Attendance Report <br><!-- comment -->
-            
+                    </table>
+                </div>
 
-        </section>
+
+
+            </section>
         <jsp:include page="../template/footer.jsp"></jsp:include>
     </body>
 </html>

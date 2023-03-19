@@ -82,7 +82,7 @@ public class TimeTable extends BaseRequireAuthenticationController {
         request.setAttribute("slots", slots);
         if (from.compareTo(to) > 0) {
             response.getWriter().println("Choose again!");
-        }
+        } else{
 
         ArrayList<Date> dates = DateTimeHelper.getListDate(from, to);
         request.setAttribute("dates", dates);
@@ -98,6 +98,7 @@ public class TimeTable extends BaseRequireAuthenticationController {
         request.setAttribute("to", to);
 
         request.getRequestDispatcher("../view/instructor/timetable2.jsp").forward(request, response);
+    }
     }
 
     /**

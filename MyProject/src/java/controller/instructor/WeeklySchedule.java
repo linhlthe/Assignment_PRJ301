@@ -70,9 +70,10 @@ public class WeeklySchedule extends BaseRequireAuthenticationController {
         InstructorDBContext insDB = new InstructorDBContext();
         Instructor instructor = insDB.getTimeTable(s.getId(), w.getStart(), w.getEnd());
         ArrayList<Session> ses = new ArrayList<>();
-        ses = instructor.getSessions();
+       // ses = instructor.getSessions();
+        request.setAttribute("instructor", instructor);
 
-        request.setAttribute("sessions", ses);
+       // request.setAttribute("sessions", ses);
         request.setAttribute("address", "Weekly Schedule");
 
         request.getRequestDispatcher("../view/instructor/timetable.jsp").forward(request, response);

@@ -6,6 +6,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="dal.StudentDBContext"%>
+<%@page import="model.Student"%>
+<%@page import="model.Group"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,45 +17,46 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <jsp:include page="../template/header.jsp"></jsp:include>
-        <div class="row">
-        <table border="1px"><tr><td></td>
-                <c:forEach items="${requestScope.dates}" var="d">
-                    <th><fmt:formatDate pattern="dd/MM" value="${d}" /></th>
-                </c:forEach></tr>
-                <c:forEach items="${requestScope.students}" var="s">
-                <tr><td>${s.surname} ${s.middlename} ${s.givenname}<br/> (${s.studentCode})<br/><!-- comment -->
-                        x</td>
+        <jsp:include page="../template/header.jsp"></jsp:include>
+            <div class="row">
+                <table border="1px"><tr><td></td>
                         <c:forEach items="${requestScope.dates}" var="d">
-                        <td style="text-align: center" width="50px">
+                        <th><fmt:formatDate pattern="dd/MM" value="${d}" /></th>
+                    </c:forEach></tr>
+                    <c:forEach items="${requestScope.students}" var="s">
+                    <tr <c:if test="${s.attendanceExemption}"> style="background-color: hsl(0, 0%, 75%,0.5)" </c:if>><td>${s.surname} ${s.middlename} ${s.givenname}<br/> (${s.studentCode})<br/><!-- comment -->
                             
-                            <c:forEach items="${requestScope.attends}" var="a">
-                                <c:if test="${a.session.date eq d && a.student.id eq s.id}">
-                                    <c:if test="${a.session.taken eq false}">
-                                    -
-                                </c:if>
-                                <c:if test="${a.session.taken}">
-
-                                    <c:if test="${a.status}">
-                                        
-                                        <div style="background-color: hsla(89, 43%, 51%, 0.3)">   P</div>
-
-                                </c:if>
-                                <c:if test="${a.status eq false}">
-                                    <div style="background-color: hsla(0, 100%, 50%, 0.3)">   A</div>
-
-                                </c:if>
-                            </c:if>
-                        </c:if>
-
-
-                    </c:forEach>
                         </td>
-                </c:forEach>
-            </tr>
-        </c:forEach>
+                            <c:forEach items="${requestScope.dates}" var="d">
+                            <td style="text-align: center" width="50px">
 
-    </table>
+                                <c:forEach items="${requestScope.attends}" var="a">
+                                    <c:if test="${a.session.date eq d && a.student.id eq s.id}">
+                                        <c:if test="${a.session.taken eq false}">
+                                            -
+                                        </c:if>
+                                        <c:if test="${a.session.taken}">
+
+                                            <c:if test="${a.status}">
+
+                                                <font color="green">P</font> 
+
+                                            </c:if>
+                                            <c:if test="${a.status eq false}">
+                                                <font color="red">A</font> 
+
+                                            </c:if>
+                                        </c:if>
+                                    </c:if>
+
+
+                                </c:forEach>
+                            </td>
+                        </c:forEach>
+                    </tr>
+                </c:forEach>
+
+            </table>
         </div>
-</body>
+    </body>
 </html>

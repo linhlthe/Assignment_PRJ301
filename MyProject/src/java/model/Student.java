@@ -21,7 +21,7 @@ public class Student extends User {
     private String placeOfBirth;
     private String image;
     private String major;
-    private int attendanceExemption;
+    private boolean attendanceExemption;
     private String curriculum;
     private String peoples;
     private String healthIssue;
@@ -98,11 +98,11 @@ public class Student extends User {
         this.major = major;
     }
 
-    public int getAttendanceExemption() {
+    public boolean isAttendanceExemption() {
         return attendanceExemption;
     }
 
-    public void setAttendanceExemption(int attendanceExemption) {
+    public void setAttendanceExemption(boolean attendanceExemption) {
         this.attendanceExemption = attendanceExemption;
     }
 

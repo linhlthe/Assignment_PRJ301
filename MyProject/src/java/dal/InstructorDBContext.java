@@ -76,11 +76,12 @@ public class InstructorDBContext extends DBContext<Instructor> {
 
     public Instructor getTimeTable(int id, Date from, Date to) {
         Instructor instructor = null;
+        Session ses = new Session();
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             String sql = "SELECT i.instructorID,ses.sessionID, ses.[date] ,ses.taken, g.groupID, g.groupName, \n"
-                    + "c.courseID, c.code, r.roomID, r.roomName,t.slotID, t.slotNum,t.startTime, t.endTime, c.courseName	\n"
+                    + "c.courseID, c.code, r.roomID, r.roomName,t.slotID, t.slotNum,t.startTime, t.endTime, c.courseName,g.edunextURL, g.meetURL \n"
                     + "FROM instructor i LEFT JOIN [session]  ses ON i.instructorID = ses.instructorID\n"
                     + "LEFT JOIN [group] g ON g.groupID = ses.groupID\n"
                     + "LEFT JOIN [course] c ON g.courseID = c.courseID\n"
@@ -93,64 +94,62 @@ public class InstructorDBContext extends DBContext<Instructor> {
             stm.setDate(2, from);
             stm.setDate(3, to);
             rs = stm.executeQuery();
-            Session ses = new Session();
-            ses.setSessionID(-1);
+
             while (rs.next()) {
                 if (instructor == null) {
                     instructor = new Instructor();
                     instructor.setId(rs.getInt("instructorID"));
-                    instructor.getSessions().add(ses);
 
                 }
-                int sesid = rs.getInt("sessionID");
-                if (sesid != ses.getSessionID()) {
-                    ses = new Session();
-                    ses.setSessionID(rs.getInt("sessionID"));
-                    ses.setDate(rs.getDate("date"));
-                    ses.setTaken(rs.getBoolean("taken"));
-                    Group g = new Group();
-                    g.setGroupID(rs.getInt("groupID"));
 
-                    g.setGroupName(rs.getString("groupName"));
-                    Course c = new Course();
-                    c.setCourseID(rs.getInt("courseID"));
-                    c.setCourseCode(rs.getString("code"));
-                    c.setCourseName(rs.getString("courseName"));
-                    g.setCourse(c);
-                    ses.setGroup(g);
-                    Room r = new Room();
-                    r.setRoomID(rs.getInt("roomID"));
-                    r.setRoomName(rs.getString("roomName"));
-                    ses.setRoom(r);
+                ses = new Session();
+                ses.setSessionID(rs.getInt("sessionID"));
+                ses.setDate(rs.getDate("date"));
+                ses.setTaken(rs.getBoolean("taken"));
+                Group g = new Group();
+                g.setGroupID(rs.getInt("groupID"));
 
-        
-                    TimeSlot t = new TimeSlot();
-                    t.setSlotID(rs.getInt("slotID"));
-                    t.setSlotNum(rs.getInt("slotNum"));
-                    t.setStartTime(rs.getTime("startTime"));
-                    t.setEndTime(rs.getTime("endTime"));
-                    ses.setSlot(t);
+                g.setGroupName(rs.getString("groupName"));
+                g.setEduNextURL(rs.getString("edunextURL"));
+                g.setMeetURL(rs.getString("meetURL"));
+                Course c = new Course();
+                c.setCourseID(rs.getInt("courseID"));
+                c.setCourseCode(rs.getString("code"));
+                c.setCourseName(rs.getString("courseName"));
+                g.setCourse(c);
+                ses.setGroup(g);
+                Room r = new Room();
+                r.setRoomID(rs.getInt("roomID"));
+                r.setRoomName(rs.getString("roomName"));
+                ses.setRoom(r);
 
-                
-                }
+                TimeSlot t = new TimeSlot();
+                t.setSlotID(rs.getInt("slotID"));
+                t.setSlotNum(rs.getInt("slotNum"));
+                t.setStartTime(rs.getTime("startTime"));
+                t.setEndTime(rs.getTime("endTime"));
+                ses.setSlot(t);
                 instructor.getSessions().add(ses);
 
             }
 
+           
+
         } catch (SQLException ex) {
-            Logger.getLogger(InstructorDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InstructorDBContext.class
+                    .getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 rs.close();
                 stm.close();
                 connection.close();
+
             } catch (SQLException ex) {
-                Logger.getLogger(InstructorDBContext.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(InstructorDBContext.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
         return instructor;
     }
-
-    
 
 }

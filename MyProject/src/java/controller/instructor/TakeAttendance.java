@@ -5,7 +5,10 @@
 package controller.instructor;
 
 import controller.authentication.BaseRequireAuthenticationController;
+import dal.DepartmentDBContext;
+import dal.GroupDBContext;
 import dal.InstructorDBContext;
+import dal.SemesterDBContext;
 import datetime.DateTimeHelper;
 import datetime.Week;
 import java.io.IOException;
@@ -18,7 +21,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
+import model.Department;
+import model.Group;
 import model.Instructor;
+import model.Semester;
 import model.Session;
 import model.User;
 
@@ -34,18 +41,31 @@ public class TakeAttendance extends BaseRequireAuthenticationController {
         User u = (User) request.getSession().getAttribute("user");
         if(u.getRole()==1){
         response.setContentType("text/html;charset=UTF-8");
-        User s = (User) request.getSession().getAttribute("user");        
+             
         LocalDateTime localDate = LocalDateTime.now();
         request.setAttribute("now", localDate);
         Week w = new Week();
         DateTimeHelper d = new DateTimeHelper();
         w = w.getWeek(d.toSQLDate(java.util.Date.from(localDate.atZone(ZoneId.systemDefault()).toInstant())));
         InstructorDBContext insDB = new InstructorDBContext();
-        Instructor instructor = insDB.getTimeTable(s.getId(), w.getStart(), w.getEnd());
+        Instructor instructor = insDB.getTimeTable(u.getId(), w.getStart(), w.getEnd());
         ArrayList<Session> ses = new ArrayList<>();
-        ses = instructor.getSessions();
+        //ses = instructor.getSessions();
 
-        request.setAttribute("sessions", ses);
+        request.setAttribute("instructor", instructor);
+        GroupDBContext gDB = new GroupDBContext();
+        SemesterDBContext sesDB = new SemesterDBContext();
+        ArrayList<Semester> terms = sesDB.all();
+        Date currentdate = new Date();
+        Semester currentTerm = new Semester();
+        for (Semester s : terms) {
+            if ((currentdate.compareTo(DateTimeHelper.toUtilDate(s.getStartDate())) >= 0) && (currentdate.compareTo(DateTimeHelper.toUtilDate(s.getEndDate())) <= 0)) {
+                currentTerm = s;
+            }
+
+        }
+        ArrayList<Group> groups= gDB.getAllGroupInstructor(u.getId(), currentTerm.getTermID());
+        request.setAttribute("groups", groups);
 
         request.getRequestDispatcher("../view/instructor/checkAttendance.jsp").forward(request, response);
         } else{

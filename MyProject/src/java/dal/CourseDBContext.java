@@ -77,7 +77,7 @@ public class CourseDBContext extends DBContext<Course> {
         PreparedStatement stm = null;
         ResultSet rs = null;
 
-        String sql = "SELECT c.code, c.courseName FROM department d inner Join Course c ON c.departmentID= d.departmentID\n"
+        String sql = "SELECT c.code,c.courseID, c.courseName FROM department d inner Join Course c ON c.departmentID= d.departmentID\n"
                 + "WHERE d.departmentID =?";
         try {
             stm = connection.prepareStatement(sql);
@@ -86,6 +86,7 @@ public class CourseDBContext extends DBContext<Course> {
             rs = stm.executeQuery();
             while (rs.next()) {
                Course c= new Course();
+               c.setCourseID(rs.getInt("courseID"));
                c.setCourseCode(rs.getString("code"));
                c.setCourseName(rs.getString("courseName"));
                courses.add(c);

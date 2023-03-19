@@ -18,10 +18,17 @@
 
         <jsp:include page="../template/header.jsp"></jsp:include>
             <section>
-                <a href="instructor/weeklySchedule"/>Weekly timetable
-                <a href="instructor/timetable"/>View Schedule 
-                <a href="instructor/takeAttendance"/>Take Attendance 
-            </section>
+                <div style="margin-left: 50px; margin-top: 20px">
+                    <table>
+                        <tr><a href="instructor/weeklySchedule"/>Weekly timetable</a><br/></tr>
+                        <tr><a href="instructor/timetable"/>View Schedule </a><br/></tr>
+                        <tr><a href="instructor/takeAttendance"/>Take Attendance </a><br/></tr>
+                        <tr><a href="instructor/profile?instructor=${sessionScope.user.id}"/>Profile</a></tr>
+                </table>
+            </div>
+
+
+        </section>
         <jsp:include page="../template/footer.jsp"></jsp:include>
 
 

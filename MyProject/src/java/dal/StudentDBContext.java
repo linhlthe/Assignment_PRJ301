@@ -33,7 +33,7 @@ public class StudentDBContext extends UserDBContext {
         PreparedStatement stm = null;
         ResultSet rs = null;
 
-        String sql = "select s.studentID,s.studentCode,u.surname, u.middlename, u.givenname , s.imageURL, g.groupID\n"
+        String sql = "select s.studentID,s.studentCode,s.attendanceExemption, u.surname, u.middlename, u.givenname , s.imageURL, g.groupID\n"
                 + "FROM [user] u INNER JOIN student s ON u.id=s.studentID\n"
                 + "inner join [studentJoin] sj on sj.studentID=s.studentID\n"
                 + "inner join [group] g on g.groupID=sj.groupID where g.groupID =?";
@@ -45,6 +45,7 @@ public class StudentDBContext extends UserDBContext {
                 Student s = new Student();
                 s.setId(rs.getInt("studentID"));
                 s.setStudentCode(rs.getString("studentCode"));
+                s.setAttendanceExemption(rs.getBoolean("attendanceExemption"));
                 s.setSurname(rs.getString("surname"));
                 s.setMiddlename(rs.getString("middlename"));
                 s.setGivenname(rs.getString("givenname"));
@@ -124,7 +125,7 @@ public class StudentDBContext extends UserDBContext {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT s.studentID,ses.sessionID, ses.[date] ,ses.taken, g.groupID, g.groupName, c.courseID, c.code, r.roomID, r.roomName, i.instructorID,t.slotID,  t.slotNum,t.startTime, t.endTime, u.username\n"
+            String sql = "SELECT s.studentID,ses.sessionID, ses.[date] ,ses.taken, g.groupID, g.groupName, c.courseID, c.code, r.roomID, r.roomName, i.instructorID,t.slotID,  t.slotNum,t.startTime, t.endTime, u.username, g.edunextURL, g.meetURL\n"
                     + "     FROM student s INNER JOIN [studentJoin]  sg ON s.studentID = sg.[studentID]\n"
                     + "                    INNER JOIN [group] g ON g.groupID = sg.groupID\n"
                     + "                    INNER JOIN [course] c ON g.courseID = c.courseID\n"
@@ -155,6 +156,8 @@ public class StudentDBContext extends UserDBContext {
                     currentGroup = new Group();
                     currentGroup.setGroupID(rs.getInt("groupID"));
                     currentGroup.setGroupName(rs.getString("groupName"));
+                    currentGroup.setEduNextURL(rs.getString("edunextURL"));
+                    currentGroup.setMeetURL(rs.getString("meetURL"));
                     Course c = new Course();
                     c.setCourseID(rs.getInt("courseID"));
                     c.setCourseCode(rs.getString("code"));

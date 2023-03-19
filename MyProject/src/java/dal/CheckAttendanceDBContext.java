@@ -29,13 +29,13 @@ import model.User;
 public class CheckAttendanceDBContext extends DBContext<CheckAttendance> {
 
     public ArrayList<CheckAttendance> getAttendancesBySession(int sessionid) {
-        String sql = "SELECT a.aid, u.id,s.studentCode, u.surname, u.middlename, u.givenname, s.imageURL, s.studentCode,a.[status], a.comment,a.recordedTime,a.sessionID,a.taker, i.takerName, ses.[date], ses.taken\n"
+        String sql = "SELECT a.aid, u.id,s.studentCode, u.surname, u.middlename, u.givenname, s.imageURL, a.[status], a.comment,a.recordedTime,a.sessionID,a.taker, i.takerName, ses.[date], ses.taken, s.attendanceExemption\n"
                 + "                FROM [user] u inner join student s on u.id=s.studentID\n"
                 + "                LEFT JOIN studentJoin sj ON sj.studentID = s.studentID\n"
                 + "                LEFT JOIN [Group] g ON g.groupID = sj.groupID\n"
                 + "                LEFT JOIN [Session] ses ON ses.groupID = g.groupID\n"
                 + "                LEFT JOIN [checkAttendance] a ON ses.sessionID = a.sessionID AND s.studentID = a.studentID\n"
-                + "		 LEFT JOIN (SELECT username AS takerName, id from [user]  inner join instructor on [user].id=[instructor].instructorID) i ON i.id=a.taker\n"
+                + "		   LEFT JOIN (SELECT username AS takerName, id from [user]  inner join instructor on [user].id=[instructor].instructorID) i ON i.id=a.taker\n"
                 + "                WHERE ses.sessionID = ?";
         ArrayList<CheckAttendance> atts = new ArrayList<>();
         PreparedStatement stm = null;
@@ -65,6 +65,7 @@ public class CheckAttendanceDBContext extends DBContext<CheckAttendance> {
                 s.setMiddlename(rs.getString("middlename"));
                 s.setGivenname(rs.getString("givenname"));
                 s.setImage(rs.getString("imageURL"));
+                s.setAttendanceExemption(rs.getBoolean("attendanceExemption"));
                 a.setRecordedTime(rs.getString("recordedTime"));
                 a.setStudent(s);
                 atts.add(a);

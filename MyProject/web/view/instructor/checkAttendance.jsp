@@ -20,9 +20,9 @@
     <body>
 
         <jsp:include page="../template/header.jsp"></jsp:include>
-        
+
             <div class="row">
-                <table border="1px">
+                <table border="1px" style="margin-bottom: 70px">
                     <tr>
 
                         <th width="20px">NO</th>
@@ -36,7 +36,7 @@
 
 
                     </tr>
-                <c:forEach items="${requestScope.sessions}" var="ses" varStatus="loop">
+                <c:forEach items="${requestScope.instructor.sessions}" var="ses" varStatus="loop">
                     <tr>
 
                         <td>${loop.index +1}</td><!-- comment -->
@@ -68,6 +68,17 @@
                     </tr>
                 </c:forEach>
             </table>
+            <div style="margin-left: 150px"><b>Report Attendance:</b>
+                <ul> 
+                        <c:forEach items="${requestScope.groups}" var="g">
+                          <li>  <a href="/instructor/reportAttendance?group=${g.groupID}">${g.groupName} - ${g.course.courseName} (${g.course.courseCode})</a> </li>
+                        </c:forEach>
+                   
+
+
+                </ul> 
+            </div>
+
         </div>
     </body>
 </html>

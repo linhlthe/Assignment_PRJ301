@@ -84,5 +84,27 @@ public class UserDBContext extends DBContext<User> {
 
     }
 
-    
+    public void update(User u, String newPassWord) {
+        PreparedStatement stm = null;
+        try {
+            String sql = "UPDATE [User]\n"
+                    + "   SET [password] = ?\n"
+                    + " WHERE [id] = ?";
+            stm = connection.prepareStatement(sql);
+            stm.setString(1, newPassWord);
+            stm.setInt(2, u.getId());
+
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                stm.close();
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
 }

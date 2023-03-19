@@ -18,8 +18,15 @@
         
         <jsp:include page="../template/header.jsp"></jsp:include>
          <div class="row">
+             <h1> Activities for ${sessionScope.user.username}</h1>
+            <div><span>Các phòng bắt đầu bằng AL thuộc tòa nhà Alpha. VD: AL...<br/>
+                    Các phòng bắt đầu bằng BE thuộc tòa nhà Beta. VD: BE,..<br/>
+                    Các phòng bắt đầu bằng G thuộc tòa nhà Gamma. VD: G201,...<br/>
+                    Các phòng tập bằng đầu bằng R thuộc khu vực sân tập Vovinam.<br/>
+                    Các phòng bắt đầu bằng DE thuộc tòa nhà Delta. VD: DE,..<br/>
+                    Little UK (LUK) thuộc tầng 5 tòa nhà Delta</span></div>
             <div id="weeklytimetable">
-                <table border="1px" width="1200px">
+                <table border="1px" width="1200px" style="text-align: center">
                     <tr>
 
                         <th rowspan='2'><font color="white">
@@ -75,13 +82,15 @@
                         </td>
                         <c:forEach items="${requestScope.dates}" var="d">
                             <td>
-                                <c:forEach items="${requestScope.sessions}" var="ses">
+                                <c:forEach items="${requestScope.instructor.sessions}" var="ses">
 
 
 
                                     <c:if test="${ses.date eq d and ses.slot.slotNum eq i}">
-                                        <a href="/group/groupDetail?group=${ses.group.groupID}">${ses.group.groupName}</a> - <a href="/course/courseDetail?course=${ses.group.course.courseID}">${ses.group.course.courseCode}</a>
+                                        <a href="/group/groupDetail?group=${ses.group.groupID}">${ses.group.groupName}</a> - <a href="/course/courseDetail?course=${ses.group.course.courseID}">${ses.group.course.courseCode}</a><br/>
                                         at ${ses.room.roomName} <br/>
+                                        <c:if test="${ses.group.eduNextURL ne null}"><button name="button" type="button" onclick="window.location.href = '${ses.group.eduNextURL}'" style="background-color: #00bebc"><font color="white">EduNext</font></button></c:if> <button name="button" type="button" onclick="window.location.href = '${ses.group.meetURL}'" style="background-color: grey"><font color="white">Meet URL</font></button><br/>
+                                        
                                         <fmt:formatDate type = "time" timeStyle = "short" value = "${ses.slot.startTime}" /> - <fmt:formatDate type = "time" timeStyle = "short" value = "${ses.slot.endTime}" /> <br/>
                                         <c:if test="${ses.taken}">
                                             <font color="green">attended</font>   

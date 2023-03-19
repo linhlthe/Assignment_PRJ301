@@ -4,6 +4,7 @@
  */
 package controller.student;
 
+import controller.authentication.BaseRequireAuthenticationController;
 import dal.CheckAttendanceDBContext;
 import dal.StudentDBContext;
 import datetime.DateTimeHelper;
@@ -70,18 +71,15 @@ public class GetListWeekOfYear extends HttpServlet {
         Student student = stuDB.getTimeTable(s.getId(), w.getStart(), w.getEnd());
         CheckAttendanceDBContext db = new CheckAttendanceDBContext();
         ArrayList<CheckAttendance> atts = db.getAttendancesOfStudentByDays(s.getId(), w.getStart(), w.getEnd());
-        
 
         ArrayList<Group> groups = new ArrayList<>();
-        if(student!=null){
+        if (student != null) {
 
-        groups = student.getGroups();
+            groups = student.getGroups();
         }
 
-        
-
         PrintWriter out = response.getWriter();
-        out.println("<table border=\"1px\" width=\"1200px\">\n"
+        out.println("<table border=\"1px\" width=\"1200px\" style=\"text-align: center\">\n"
                 + "                <tr style=\"background-color:#00bebc\">\n"
                 + "                    <td rowspan='2'><font color=\"white\">\n"
                 + "                        <form action=\"timetable\" method=\"POST\"> \n"
@@ -147,21 +145,24 @@ public class GetListWeekOfYear extends HttpServlet {
                         String rname = r.getRoomName();
 
                         if (ses.getDate().compareTo(d) == 0 && slotNum == i) {
-                            out.println("<a href=\"/group/groupDetail?group="+g.getGroupID()+"/>"+ g.getGroupName() +"</a> - <a href=\"/course/courseDetail?course="+ses.getGroup().getCourse().getCourseID()+"\">"+code+"</a>" + "<br/>\n"
-                                    + iname + " at " + rname + "<br/>\n"
+                            out.println("<a href=\"/group/groupDetail?group=" + g.getGroupID() + "\">" + g.getGroupName() + "</a> - <a href=\"/course/courseDetail?course=" + ses.getGroup().getCourse().getCourseID() + "\">" + code + "</a>" + "<br/>\n"
+                                    + "<a href=\"/instructor/profile?instructor=" + ins.getId() + "\">" + iname + "</a>" + " at " + rname + "<br/>\n");
+                            if (g.getEduNextURL() != null) {
+                                out.println("<button name=\"button\" type=\"button\" onclick=\"window.location.href = '" + g.getEduNextURL() + "'\" style=\"background-color: #00bebc\"><font color=\"white\">EduNext</font></button>");
+                            }
+                            out.println("<button name=\"button\" type=\"button\" onclick=\"window.location.href = '" + g.getMeetURL() + "'\" style=\"background-color: grey\"><font color=\"white\">Meet URL</font></button><br/>"
                                     + t.getStartTime() + " - " + t.getEndTime() + " <br/>\n");
                             if (ses.isTaken()) {
-                                for (CheckAttendance att: atts){
-                                    if (att.getSession().getSessionID()==ses.getSessionID()){
-                                        if (att.isStatus()){
+                                for (CheckAttendance att : atts) {
+                                    if (att.getSession().getSessionID() == ses.getSessionID()) {
+                                        if (att.isStatus()) {
                                             out.println("<font color=\"green\">attended</font>   \n");
-                                        }
-                                        else {
+                                        } else {
                                             out.println("<font color=\"red\">absent</font>   \n");
                                         }
                                     }
                                 }
-                                
+
                             } else {
                                 out.println("<font color=\"red\">Not yet</font>   \n");
                             }
@@ -193,7 +194,7 @@ public class GetListWeekOfYear extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -217,5 +218,7 @@ public class GetListWeekOfYear extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
 
 }
